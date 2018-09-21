@@ -9,11 +9,22 @@
 import UIKit
 
 class Logging: NSObject {
-
-    class func logIfEnabled(_ string: String) {
-        #if DEBUG
-        print(string)
-        #endif
+    
+    private let enableLogging: Bool = true
+    
+    class var instance: Logging  {
+        struct Singleton {
+            static let instance = Logging()
+        }
+        return Singleton.instance
+    }
+    
+    internal func logIfEnabled(_ string: String) {
+//        #if DEBUG
+//        print(string)
+//        #endif
+        if enableLogging { print(string) }
+        
     }
     
 }
