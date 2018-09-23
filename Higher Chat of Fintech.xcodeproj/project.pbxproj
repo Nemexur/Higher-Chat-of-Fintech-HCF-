@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		26C4B94D2155657000B3622B /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C4B94C2155657000B3622B /* Logging.swift */; };
+		26C4B94D2155657000B3622B /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C4B94C2155657000B3622B /* Helper.swift */; };
 		26F51F5921554ECA002D5EB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F51F5821554ECA002D5EB4 /* AppDelegate.swift */; };
 		26F51F5B21554ECA002D5EB4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F51F5A21554ECA002D5EB4 /* ViewController.swift */; };
 		26F51F5E21554ECA002D5EB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26F51F5C21554ECA002D5EB4 /* Main.storyboard */; };
@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		26C4B94C2155657000B3622B /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
+		26C4B94C2155657000B3622B /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		26F51F5521554ECA002D5EB4 /* Higher Chat of Fintech.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Higher Chat of Fintech.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		26F51F5821554ECA002D5EB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		26F51F5A21554ECA002D5EB4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -40,7 +40,7 @@
 		26C4B94B2155654900B3622B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				26C4B94C2155657000B3622B /* Logging.swift */,
+				26C4B94C2155657000B3622B /* Helper.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -147,7 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				26F51F5B21554ECA002D5EB4 /* ViewController.swift in Sources */,
-				26C4B94D2155657000B3622B /* Logging.swift in Sources */,
+				26C4B94D2155657000B3622B /* Helper.swift in Sources */,
 				26F51F5921554ECA002D5EB4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
