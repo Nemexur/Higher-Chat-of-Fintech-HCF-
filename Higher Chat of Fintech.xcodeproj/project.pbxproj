@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		26C4B94D2155657000B3622B /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C4B94C2155657000B3622B /* Helper.swift */; };
+		26698454215D133200B32A24 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26698453215D133100B32A24 /* ProfileViewController.swift */; };
+		26BAE5A7215D183000B3FA71 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26BAE5A6215D183000B3FA71 /* Profile.storyboard */; };
+		26C4B94D2155657000B3622B /* LoggingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C4B94C2155657000B3622B /* LoggingHelper.swift */; };
 		26F51F5921554ECA002D5EB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F51F5821554ECA002D5EB4 /* AppDelegate.swift */; };
 		26F51F5B21554ECA002D5EB4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F51F5A21554ECA002D5EB4 /* ViewController.swift */; };
 		26F51F5E21554ECA002D5EB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26F51F5C21554ECA002D5EB4 /* Main.storyboard */; };
@@ -16,7 +18,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		26C4B94C2155657000B3622B /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		26698453215D133100B32A24 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		26BAE5A6215D183000B3FA71 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		26C4B94C2155657000B3622B /* LoggingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingHelper.swift; sourceTree = "<group>"; };
 		26F51F5521554ECA002D5EB4 /* Higher Chat of Fintech.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Higher Chat of Fintech.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		26F51F5821554ECA002D5EB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		26F51F5A21554ECA002D5EB4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -37,10 +41,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		26BAE5A8215D186B00B3FA71 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				26F51F6121554ECC002D5EB4 /* LaunchScreen.storyboard */,
+				26F51F5C21554ECA002D5EB4 /* Main.storyboard */,
+				26BAE5A6215D183000B3FA71 /* Profile.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
 		26C4B94B2155654900B3622B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				26C4B94C2155657000B3622B /* Helper.swift */,
+				26C4B94C2155657000B3622B /* LoggingHelper.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -64,13 +78,13 @@
 		26F51F5721554ECA002D5EB4 /* Higher Chat of Fintech */ = {
 			isa = PBXGroup;
 			children = (
+				26BAE5A8215D186B00B3FA71 /* Storyboards */,
 				26C4B94B2155654900B3622B /* Supporting Files */,
 				26F51F5821554ECA002D5EB4 /* AppDelegate.swift */,
 				26F51F5A21554ECA002D5EB4 /* ViewController.swift */,
-				26F51F5C21554ECA002D5EB4 /* Main.storyboard */,
 				26F51F5F21554ECC002D5EB4 /* Assets.xcassets */,
-				26F51F6121554ECC002D5EB4 /* LaunchScreen.storyboard */,
 				26F51F6421554ECC002D5EB4 /* Info.plist */,
+				26698453215D133100B32A24 /* ProfileViewController.swift */,
 			);
 			path = "Higher Chat of Fintech";
 			sourceTree = "<group>";
@@ -135,6 +149,7 @@
 			files = (
 				26F51F6321554ECC002D5EB4 /* LaunchScreen.storyboard in Resources */,
 				26F51F6021554ECC002D5EB4 /* Assets.xcassets in Resources */,
+				26BAE5A7215D183000B3FA71 /* Profile.storyboard in Resources */,
 				26F51F5E21554ECA002D5EB4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,7 +162,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				26F51F5B21554ECA002D5EB4 /* ViewController.swift in Sources */,
-				26C4B94D2155657000B3622B /* Helper.swift in Sources */,
+				26C4B94D2155657000B3622B /* LoggingHelper.swift in Sources */,
+				26698454215D133200B32A24 /* ProfileViewController.swift in Sources */,
 				26F51F5921554ECA002D5EB4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -225,7 +241,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -280,7 +296,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

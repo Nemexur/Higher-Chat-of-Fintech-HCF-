@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JPr-gE-KPF">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Profile View Controller-->
+        <scene sceneID="Sht-UC-Mfr">
+            <objects>
+                <viewController storyboardIdentifier="ProfileVC" id="JPr-gE-KPF" customClass="ProfileViewController" customModule="Higher_Chat_of_Fintech" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DnP-jg-A70">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfileImage" translatesAutoresizingMaskIntoConstraints="NO" id="UXZ-Ti-2Pe">
+                                <rect key="frame" x="16" y="36" width="288" height="288"/>
+                                <color key="backgroundColor" red="0.2482905614" green="1" blue="0.28594049100000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="UXZ-Ti-2Pe" secondAttribute="height" multiplier="1:1" id="Ypr-uo-bJH"/>
+                                </constraints>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="fbQ-RA-26l">
+                                <rect key="frame" x="16" y="340" width="288" height="154"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Alex Milogradsky" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xOp-7q-bZQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="26.5"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="23"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBj-ki-MS4">
+                                        <rect key="frame" x="0.0" y="31.5" width="288" height="122.5"/>
+                                        <string key="text">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaммммaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaмммaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</string>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="16"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fh3-PQ-grO">
+                                <rect key="frame" x="16" y="502" width="288" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="9ph-w2-1aE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Редактировать">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xO0-NB-jQA">
+                                <rect key="frame" x="234" y="254" width="70" height="70"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="taj-Xa-FY8"/>
+                                    <constraint firstAttribute="height" constant="70" id="zGN-ST-fAy"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="EditProfileImage"/>
+                                <connections>
+                                    <action selector="importImageViaEditProfileImageButton:" destination="JPr-gE-KPF" eventType="touchUpInside" id="8D1-tJ-W5i"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="UXZ-Ti-2Pe" firstAttribute="leading" secondItem="zFn-CP-hE5" secondAttribute="leading" constant="16" id="3oS-qn-cWI"/>
+                            <constraint firstItem="UXZ-Ti-2Pe" firstAttribute="top" secondItem="zFn-CP-hE5" secondAttribute="top" constant="16" id="4hx-5E-zOl"/>
+                            <constraint firstItem="fh3-PQ-grO" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fbQ-RA-26l" secondAttribute="bottom" constant="8" id="AbY-fa-fMB"/>
+                            <constraint firstItem="zFn-CP-hE5" firstAttribute="trailing" secondItem="UXZ-Ti-2Pe" secondAttribute="trailing" constant="16" id="DEK-WZ-cNU"/>
+                            <constraint firstItem="xO0-NB-jQA" firstAttribute="leading" secondItem="UXZ-Ti-2Pe" secondAttribute="trailing" constant="-70" id="Mam-oU-kxA"/>
+                            <constraint firstItem="zFn-CP-hE5" firstAttribute="bottom" secondItem="fh3-PQ-grO" secondAttribute="bottom" constant="16" id="OnV-Do-qKh"/>
+                            <constraint firstItem="fbQ-RA-26l" firstAttribute="top" secondItem="UXZ-Ti-2Pe" secondAttribute="bottom" constant="16" id="RJF-id-gZz"/>
+                            <constraint firstItem="zFn-CP-hE5" firstAttribute="trailing" secondItem="fbQ-RA-26l" secondAttribute="trailing" constant="16" id="SU6-EU-1d0"/>
+                            <constraint firstItem="zFn-CP-hE5" firstAttribute="trailing" secondItem="fh3-PQ-grO" secondAttribute="trailing" constant="16" id="UW7-SB-XjH"/>
+                            <constraint firstItem="fh3-PQ-grO" firstAttribute="leading" secondItem="zFn-CP-hE5" secondAttribute="leading" constant="16" id="bVq-ub-PaJ"/>
+                            <constraint firstItem="fbQ-RA-26l" firstAttribute="leading" secondItem="DnP-jg-A70" secondAttribute="leading" constant="16" id="mKj-sg-D1N"/>
+                            <constraint firstItem="xO0-NB-jQA" firstAttribute="top" secondItem="UXZ-Ti-2Pe" secondAttribute="bottom" constant="-70" id="zMl-En-khq"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zFn-CP-hE5"/>
+                    </view>
+                    <connections>
+                        <outlet property="editButton" destination="fh3-PQ-grO" id="oed-cJ-pzG"/>
+                        <outlet property="editProfileImageButton" destination="xO0-NB-jQA" id="7BS-QP-9bl"/>
+                        <outlet property="profileImage" destination="UXZ-Ti-2Pe" id="b9w-M4-RNl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GiK-0Q-8FG" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="356" y="132"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="EditProfileImage" width="425.27999877929688" height="425.27999877929688"/>
+        <image name="ProfileImage" width="600" height="600"/>
+    </resources>
+</document>
