@@ -20,8 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        if let rootViewController = profileStoryBoard.instantiateViewController(withIdentifier: "ProfileVC") as? ProfileViewController {
-            self.window?.rootViewController = rootViewController
+        if let rootViewController = profileStoryBoard.instantiateViewController(withIdentifier: "ConversationVC") as? ConversationsListViewController {
+            self.window?.rootViewController = UINavigationController(rootViewController: rootViewController)
             self.window?.makeKeyAndVisible()
         } else {
             print("Unexpected error with ProfileStoryBoard has occurred")

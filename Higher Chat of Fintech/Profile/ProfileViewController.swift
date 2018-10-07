@@ -15,13 +15,17 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var editProfileImageButton: UIButton!
+    @IBOutlet weak var profileName: UILabel!
+    @IBOutlet weak var topBarProfileView: UIView!
     
     //MARK: - Declared Image Pickers
     
-    private enum ImagePickers {
+    private struct ImagePickers {
+        lazy var cameraImagePicker = UIImagePickerController()
+        lazy var photolibraryImagePicker = UIImagePickerController()
         
-        static let cameraImagePicker = UIImagePickerController()
-        static let photolibraryImagePicker = UIImagePickerController()
+        
+        init() { }
         
     }
     
@@ -31,6 +35,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         
         static let profileImageAndEditProfileImageButton = 35
         static let editButton = 10
+        static let topBarProfileView = 10
         
     }
     
@@ -46,14 +51,16 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         //Произошла ошибка так, как мы пытаемся раскрыть значение, которое является на данный момент nil.
     }
     
+    private var imagePickers: ImagePickers = ImagePickers()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureImagePickers()
+        setupBordersForImagesAndButtons()
         logIfEnabled("\nFrame of EditButton: \(editButton.frame) in ---\(#function)---\n")
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        setupBordersForImagesAndButtons()
         logIfEnabled("\nFrame of EditButton: \(editButton.frame) in ---\(#function)---\n")
         //Значение editButton.frame отличается в этой функции от значения editButton.frame в viewDidLoad, так как во время вызова editButton.frame в viewDidLoad значания
         //frame соответствует значению, которое было установлено в самом StoryBoard.
@@ -70,6 +77,9 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         editButton.layer.borderWidth = 1
         profileImage.layer.cornerRadius = CGFloat(CornerRadiusDefinition.profileImageAndEditProfileImageButton)
         profileImage.clipsToBounds = true
+        topBarProfileView.layer.cornerRadius = CGFloat(CornerRadiusDefinition.topBarProfileView)
+        topBarProfileView.layer.borderColor = UIColor.black.cgColor
+        topBarProfileView.layer.borderWidth = 1
         
     }
     
@@ -78,19 +88,19 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     private func configureImagePickers() {
         
         //Configure Settings for CameraImagePicker
-        ImagePickers.cameraImagePicker.delegate = self
+        imagePickers.cameraImagePicker.delegate = self
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             
-            ImagePickers.cameraImagePicker.sourceType = .camera
-            ImagePickers.cameraImagePicker.allowsEditing = false
-            ImagePickers.cameraImagePicker.cameraCaptureMode = .photo
+            imagePickers.cameraImagePicker.sourceType = .camera
+            imagePickers.cameraImagePicker.allowsEditing = false
+            imagePickers.cameraImagePicker.cameraCaptureMode = .photo
             
         }
 
         //Configure Settings for PhotoLibraryImagePicker
-        ImagePickers.photolibraryImagePicker.delegate = self
-        ImagePickers.photolibraryImagePicker.sourceType = .photoLibrary
-        ImagePickers.photolibraryImagePicker.allowsEditing = false
+        imagePickers.photolibraryImagePicker.delegate = self
+        imagePickers.photolibraryImagePicker.sourceType = .photoLibrary
+        imagePickers.photolibraryImagePicker.allowsEditing = false
         
     }
     
@@ -110,7 +120,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         let galleryAction = UIAlertAction(title: "Gallery", style: .default)
         { [unowned self] (_) in
 
-            self.present(ImagePickers.photolibraryImagePicker, animated: true, completion: nil)
+            self.present(self.imagePickers.photolibraryImagePicker, animated: true, completion: nil)
         }
         alert.addAction(galleryAction)
         
@@ -119,7 +129,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         { [unowned self] (_) in
             
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                self.present(ImagePickers.cameraImagePicker, animated: true, completion: nil)
+                self.present(self.imagePickers.cameraImagePicker, animated: true, completion: nil)
             } else { print("\n-----Camera is not available-----\n") }
             
         }
