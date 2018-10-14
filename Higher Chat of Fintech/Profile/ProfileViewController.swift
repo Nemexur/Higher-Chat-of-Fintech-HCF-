@@ -26,17 +26,17 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         
         
         init() { }
-        
     }
     
     //MARK: - Values for CornerRadius
     
-    private enum CornerRadiusDefinition {
-        
+    private struct CornerRadiusDefinition {
         static let profileImageAndEditProfileImageButton = 35
         static let editButton = 10
         static let topBarProfileView = 10
         
+        
+        private init() { }
     }
     
     //MARK: - Overrided UIViewController Functions
@@ -158,4 +158,8 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         self.dismiss(animated: true, completion: nil)
     }
     
+    deinit {
+        print("----- ProfileViewController has been deinitiolized -----")
+        self.removeFromParent()
+    }
 }

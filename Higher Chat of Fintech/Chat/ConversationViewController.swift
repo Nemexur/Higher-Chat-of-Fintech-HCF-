@@ -10,8 +10,13 @@ import UIKit
 
 //MARK: - Identifiers
 
-fileprivate let cellIdentifierIncoming = "MessageCellIncoming"
-fileprivate let cellIdentifierOutgoing = "MessageCellOutgoing"
+struct CellID {
+    static let cellIdentifierIncoming = "MessageCellIncoming"
+    static let cellIdentifierOutgoing = "MessageCellOutgoing"
+    
+    
+    private init() { }
+}
 
 class ConversationViewController: UIViewController {
     
@@ -25,6 +30,8 @@ class ConversationViewController: UIViewController {
 
     @IBOutlet weak var completedMessage: UIButton!
 
+    @IBOutlet var bottomConstraintOfInputMessageView: NSLayoutConstraint!
+    
     var user: Conversation? {
         didSet {
             navigationItem.title = user!.name
@@ -34,7 +41,7 @@ class ConversationViewController: UIViewController {
     //MARK: - Messages Container
     
     fileprivate var messages: [Message] = []
-    
+
     //MARK: - Overrided UIViewController Functions
     
     override func viewDidLoad() {
@@ -42,6 +49,8 @@ class ConversationViewController: UIViewController {
         if user?.lastMessage != nil && user?.hasUnreadMessages == false {
             messages.append(Message(text: user?.lastMessage, isIncoming: true))
         }
+        let tapToHideKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyBoard))
+        view.addGestureRecognizer(tapToHideKeyboard)
         setupIBOutletsAndNotifications()
         textViewDidChange(userMessage)
     }
@@ -55,13 +64,11 @@ class ConversationViewController: UIViewController {
             chatTableView.reloadData()
             chatTableView.transform = CGAffineTransform (scaleX: 1, y: -1);
         }
-        view.frame.origin.y = 0
-        hideKeyBoard()
     }
     
     //MARK: - Additional Functions
     
-    private func hideKeyBoard() {
+    @objc private func hideKeyBoard() {
         userMessage.resignFirstResponder()
     }
     
@@ -75,8 +82,8 @@ class ConversationViewController: UIViewController {
         chatTableView.transform = CGAffineTransform (scaleX: 1, y: -1);
         chatTableView.backgroundColor = UIColor(white: 0.90, alpha: 1)
         
-        chatTableView.register(ChatTableViewCell.self, forCellReuseIdentifier: cellIdentifierIncoming)
-        chatTableView.register(ChatTableViewCell.self, forCellReuseIdentifier: cellIdentifierOutgoing)
+        chatTableView.register(ChatTableViewCell.self, forCellReuseIdentifier: CellID.cellIdentifierIncoming)
+        chatTableView.register(ChatTableViewCell.self, forCellReuseIdentifier: CellID.cellIdentifierOutgoing)
         chatTableView.separatorStyle = .none
         chatTableView.backgroundColor = UIColor.white
         
@@ -94,9 +101,15 @@ class ConversationViewController: UIViewController {
             let keyboardRect = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
             else { return }
         if notification.name == UIResponder.keyboardWillChangeFrameNotification || notification.name == UIResponder.keyboardWillShowNotification {
-            view.frame.origin.y = -keyboardRect.height
+            self.bottomConstraintOfInputMessageView.constant = keyboardRect.height
+            UIView.animate(withDuration: 0.5, animations: {
+                self.view.layoutIfNeeded()
+            })
         } else {
-            view.frame.origin.y = 0
+            self.bottomConstraintOfInputMessageView.constant = 0
+            UIView.animate(withDuration: 0.5, animations: {
+                self.view.layoutIfNeeded()
+            })
         }
     }
     
@@ -120,7 +133,11 @@ class ConversationViewController: UIViewController {
         
         present(alert, animated: true, completion: nil)
     }
-
+    
+    deinit {
+        print("----- ConversationViewController has been deinitiolized -----")
+        self.removeFromParent()
+    }
 }
 
 //MARK: - Additional Functions
@@ -149,12 +166,12 @@ extension ConversationViewController: UITableViewDataSource {
         if let flag = messages[indexPath.row].isIncoming {
             if flag {
                 cellFinal = configureCellWithIdentifier(tableView: tableView,
-                                                        identifier: cellIdentifierIncoming,
+                                                        identifier: CellID.cellIdentifierIncoming,
                                                         indexPath: indexPath,
                                                         message: messages[indexPath.row]) as! ChatTableViewCell
             } else {
                 cellFinal = configureCellWithIdentifier(tableView: tableView,
-                                                        identifier: cellIdentifierOutgoing,
+                                                        identifier: CellID.cellIdentifierOutgoing,
                                                         indexPath: indexPath,
                                                         message: messages[indexPath.row]) as! ChatTableViewCell
             }

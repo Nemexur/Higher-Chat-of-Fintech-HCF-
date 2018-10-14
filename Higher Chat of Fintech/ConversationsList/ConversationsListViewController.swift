@@ -10,20 +10,37 @@ import UIKit
 
 //MARK: - Identifiers
 
-fileprivate let segueIdentifier = "ShowFullChat"
 fileprivate let cellIdentifier = "Conversation"
 
-class ConversationsListViewController: UIViewController {
+struct Segues {
+    static let profileSegueID = "ShowProfile"
+    //For ThemesPicker on Obj-C
+    static let themesPickerSegueID = "ShowThemesPicker"
+    //For ThemesPicker on Swift
+    static let themesPickerSwiftSegueID = "ShowThemesPickerSwift"
+    static let chatSegueID = "ShowFullChat"
+    
+    
+    private init() { }
+}
+
+class ConversationsListViewController: UIViewController, ThemesViewControllerDelegate {
     
     //MARK: - IBOutlets
     
     @IBOutlet weak var conversationsTableView: UITableView!
     
-    //MARK: - Declared variables and constants connected to User
+    @IBOutlet var chooseThemePickerView: UIView!
+    
+    //MARK: - Declared variables and constants
     
     var sectionData: [Int:[Conversation]] = [:]
     
     let userTypes: [String] = ["Online", "Offline"]
+    
+    var selectedColor: UIColor?
+    
+    var chooseThemePickerViewAvailable: Bool = true
     
     //MARK: - HardCoded Conversations Information
     
@@ -53,21 +70,118 @@ class ConversationsListViewController: UIViewController {
         let allocatedUsers = allocateUsers(users: userchats)
         sectionData[0] = allocatedUsers.online
         sectionData[1] = allocatedUsers.offline
-    
+        selectedColor = self.view.backgroundColor
+        let defaults = UserDefaults.standard
+        if let color = defaults.colorForKey(key: "ThemeOfTheApp") {
+            selectedColor = color
+            navigationController?.navigationBar.backgroundColor = selectedColor
+        }
     }
 
     //MARK: - Do something with Navigation Bar
     
     private func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
+        chooseThemePickerView.layer.cornerRadius = 15
     }
     
     //MARK: - Unwind Segues to this ViewController
     
-    @IBAction func unwindToConversationsListFromProfile (_ sender: UIStoryboardSegue) {
-        
+    @IBAction func unwindToConversationsListFromProfile (_ sender: UIStoryboardSegue) { }
+    
+    @IBAction func unwindToConversationsListFromThemes (_ sender: UIStoryboardSegue) { }
+    
+    @IBAction func unwindToConversationsListFromThemesSwift (_ sender: UIStoryboardSegue) { }
+    
+    //MARK: - Button Actions
+    
+    @IBAction func showChooseThemePickerView(_ sender: Any) {
+        if chooseThemePickerViewAvailable {
+            displayChooseThemePickerView(chooseThemePickerView)
+        } else {
+            hideChooseThemePickerView(chooseThemePickerView)
+        }
+    }
+    
+    @IBAction func showSwiftThemesPicker(_ sender: Any) {
+        self.performSegue(withIdentifier: Segues.themesPickerSwiftSegueID, sender: nil)
+    }
+    
+    @IBAction func showObjCThemesPicker(_ sender: Any) {
+        self.performSegue(withIdentifier: Segues.themesPickerSegueID, sender: nil)
+    }
+    
+    //MARK: - Additional Functions
+    
+    private func displayChooseThemePickerView(_ view: UIView) {
+        chooseThemePickerViewAvailable.toggle()
+        UIView.animate(withDuration: 0.7,
+                       delay: 0,
+                       usingSpringWithDamping: 0.6,
+                       initialSpringVelocity: 0.35,
+                       options: [.curveEaseInOut],
+                       animations: {view.transform = CGAffineTransform.init(translationX: 0, y: 170)},
+                       completion: nil)
+    }
+    
+    private func hideChooseThemePickerView(_ view: UIView) {
+        chooseThemePickerViewAvailable.toggle()
+        UIView.animate(withDuration: 0.5,
+                       delay: 0,
+                       options: [.curveEaseOut],
+                       animations: {view.transform = CGAffineTransform.identity},
+                       completion: nil)
+    }
+    
+    //MARK: - Delegate Methods
+    
+    func themesViewController(_ controller: ThemesViewController, didSelectTheme selectedTheme: UIColor) {
+        logThemeChanging(selectedTheme: selectedTheme)
     }
 
+    func logThemeChanging(selectedTheme: UIColor) {
+        let defaults = UserDefaults.standard
+        navigationController?.navigationBar.backgroundColor = selectedTheme
+        selectedColor = selectedTheme
+        defaults.setColor(color: selectedTheme, forKey: "ThemeOfTheApp")
+        let colors = [UIColor.red:"Red", UIColor.yellow:"Yellow", UIColor.green:"Green", UIColor.white:"White"]
+        if colors.keys.contains(selectedTheme) {
+            print("User picked: \(colors[selectedTheme]!) color")
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Segues.chatSegueID {
+            guard let controller = segue.destination as? ConversationViewController
+                else { return }
+            controller.user = sender as? Conversation
+        }
+        
+        if segue.identifier == Segues.profileSegueID {
+            guard let userController = segue.destination as? ProfileViewController
+                else { return}
+            userController.view.backgroundColor = selectedColor
+        }
+        
+        if segue.identifier == Segues.themesPickerSegueID {
+            guard let themePickerController = segue.destination as? ThemesViewController
+                else { return }
+            hideChooseThemePickerView(chooseThemePickerView)
+            themePickerController.delegate = self
+            themePickerController.view.backgroundColor = selectedColor
+        }
+        
+        if segue.identifier == Segues.themesPickerSwiftSegueID {
+            guard let themesPickerSwiftController = segue.destination as? ThemesPickerViewControllerSwift
+                else { return }
+            hideChooseThemePickerView(chooseThemePickerView)
+            themesPickerSwiftController.onThemesViewControllerDelegate = {
+                [unowned self] didSelectTheme in
+                self.logThemeChanging(selectedTheme: didSelectTheme)
+            }
+            themesPickerSwiftController.view.backgroundColor = selectedColor
+        }
+    }
 }
 
 //MARK: - Allocate Users Functions
@@ -84,7 +198,6 @@ private func allocateUsers(users: [Conversation]) -> (online: [Conversation], of
         }
     }
     return(onlineUsers, offlineUsers)
-    
 }
 
 //MARK: - Extensions for UITableView
@@ -118,7 +231,6 @@ extension ConversationsListViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return userTypes.count
     }
-    
 }
 
 extension ConversationsListViewController: UITableViewDelegate {
@@ -129,15 +241,13 @@ extension ConversationsListViewController: UITableViewDelegate {
         certainUser.hasUnreadMessages = false
         sectionData[indexPath.section]![indexPath.row] = certainUser
         
-        self.performSegue(withIdentifier: segueIdentifier, sender: certainUser)
+        self.performSegue(withIdentifier: Segues.chatSegueID, sender: certainUser)
         
         tableView.deselectRow(at: indexPath, animated: true)
         tableView.reloadData()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let controller = segue.destination as? ConversationViewController {
-            controller.user = sender as? Conversation
-        }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
     }
 }

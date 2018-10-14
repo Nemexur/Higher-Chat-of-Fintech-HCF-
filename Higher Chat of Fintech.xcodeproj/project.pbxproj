@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		265114C82170B52400938317 /* ThemesPickerViewControllerSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265114C72170B52400938317 /* ThemesPickerViewControllerSwift.swift */; };
+		26695F7E216F37F500255C85 /* ThemesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26695F7D216F37F500255C85 /* ThemesViewController.m */; };
+		26695F90216F530C00255C85 /* Themes.m in Sources */ = {isa = PBXBuildFile; fileRef = 26695F8F216F530C00255C85 /* Themes.m */; };
+		26695F93216F83EE00255C85 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26695F92216F83EE00255C85 /* UserDefaultsExtension.swift */; };
 		26698454215D133200B32A24 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26698453215D133100B32A24 /* ProfileViewController.swift */; };
 		266997852168FF5000FC0F6D /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266997842168FF5000FC0F6D /* Conversation.swift */; };
 		266997872168FF7300FC0F6D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266997862168FF7300FC0F6D /* Message.swift */; };
@@ -26,6 +30,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		265114C72170B52400938317 /* ThemesPickerViewControllerSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesPickerViewControllerSwift.swift; sourceTree = "<group>"; };
+		26695F7B216F37F500255C85 /* Higher Chat of Fintech-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Higher Chat of Fintech-Bridging-Header.h"; sourceTree = "<group>"; };
+		26695F7C216F37F500255C85 /* ThemesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThemesViewController.h; sourceTree = "<group>"; };
+		26695F7D216F37F500255C85 /* ThemesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThemesViewController.m; sourceTree = "<group>"; };
+		26695F8E216F530C00255C85 /* Themes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Themes.h; sourceTree = "<group>"; };
+		26695F8F216F530C00255C85 /* Themes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Themes.m; sourceTree = "<group>"; };
+		26695F92216F83EE00255C85 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		26698453215D133100B32A24 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		266997842168FF5000FC0F6D /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		266997862168FF7300FC0F6D /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -57,6 +68,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		26695F7A216F375C00255C85 /* Theme Picker */ = {
+			isa = PBXGroup;
+			children = (
+				26695F7C216F37F500255C85 /* ThemesViewController.h */,
+				26695F7D216F37F500255C85 /* ThemesViewController.m */,
+				26695F7B216F37F500255C85 /* Higher Chat of Fintech-Bridging-Header.h */,
+				265114C72170B52400938317 /* ThemesPickerViewControllerSwift.swift */,
+			);
+			path = "Theme Picker";
+			sourceTree = "<group>";
+		};
+		26695F80216F43DE00255C85 /* Classes For Themes */ = {
+			isa = PBXGroup;
+			children = (
+				26695F8E216F530C00255C85 /* Themes.h */,
+				26695F8F216F530C00255C85 /* Themes.m */,
+			);
+			path = "Classes For Themes";
+			sourceTree = "<group>";
+		};
+		26695F91216F83C900255C85 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				26695F92216F83EE00255C85 /* UserDefaultsExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		266997832168FF3200FC0F6D /* Classes For Dialogs */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,10 +187,13 @@
 			children = (
 				266A35652167D97F00028668 /* AppDelegate */,
 				266A35392166243A00028668 /* Protocols */,
+				26695F91216F83C900255C85 /* Extensions */,
 				266997832168FF3200FC0F6D /* Classes For Dialogs */,
+				26695F80216F43DE00255C85 /* Classes For Themes */,
 				26BAE5A8215D186B00B3FA71 /* Storyboards */,
 				26C4B94B2155654900B3622B /* Supporting Files */,
 				266A35642167D96E00028668 /* Profile */,
+				26695F7A216F375C00255C85 /* Theme Picker */,
 				266A35612167D92600028668 /* ConversationsList */,
 				266A35632167D94900028668 /* Chat */,
 				26F51F5A21554ECA002D5EB4 /* ViewController.swift */,
@@ -193,6 +235,7 @@
 				TargetAttributes = {
 					26F51F5421554ECA002D5EB4 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -233,18 +276,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				265114C82170B52400938317 /* ThemesPickerViewControllerSwift.swift in Sources */,
 				266A353B2166289500028668 /* ConversationCellConfiguration.swift in Sources */,
 				26F51F5B21554ECA002D5EB4 /* ViewController.swift in Sources */,
 				266A35322165EE1400028668 /* ConversationsListViewController.swift in Sources */,
 				266A35342165F34600028668 /* ConversationTableViewCell.swift in Sources */,
 				26C4B94D2155657000B3622B /* LoggingHelper.swift in Sources */,
+				26695F90216F530C00255C85 /* Themes.m in Sources */,
 				266997852168FF5000FC0F6D /* Conversation.swift in Sources */,
 				26698454215D133200B32A24 /* ProfileViewController.swift in Sources */,
 				266A354D2166741B00028668 /* ChatTableViewCell.swift in Sources */,
 				266A35382166242F00028668 /* MessageCellConfiguration.swift in Sources */,
+				26695F93216F83EE00255C85 /* UserDefaultsExtension.swift in Sources */,
 				266997872168FF7300FC0F6D /* Message.swift in Sources */,
 				266A35692167E99700028668 /* ConversationViewController.swift in Sources */,
 				26F51F5921554ECA002D5EB4 /* AppDelegate.swift in Sources */,
+				26695F7E216F37F500255C85 /* ThemesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,7 +326,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -340,7 +387,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -390,6 +437,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 52Q39KPRSY;
 				INFOPLIST_FILE = "Higher Chat of Fintech/Info.plist";
@@ -400,6 +448,8 @@
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nemexur.Higher-Chat-of-Fintech";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Higher Chat of Fintech/Theme Picker/Higher Chat of Fintech-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -409,6 +459,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 52Q39KPRSY;
 				INFOPLIST_FILE = "Higher Chat of Fintech/Info.plist";
@@ -419,6 +470,7 @@
 				OTHER_SWIFT_FLAGS = "-DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nemexur.Higher-Chat-of-Fintech";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Higher Chat of Fintech/Theme Picker/Higher Chat of Fintech-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -8,7 +8,7 @@
 
 import UIKit
 
-let enableLogging: Bool = true
+let enableLogging: Bool = false
 
 public func logIfEnabled(_ string: String) {
     if enableLogging { print(string) }
