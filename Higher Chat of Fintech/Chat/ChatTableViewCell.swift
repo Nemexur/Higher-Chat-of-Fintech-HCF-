@@ -38,7 +38,7 @@ class ChatTableViewCell: UITableViewCell, MessageCellConfiguration {
         
         //MARK: - Configure BubbleBackgroundView
         
-        bubblebackgroundView.layer.cornerRadius = 24
+        bubblebackgroundView.layer.cornerRadius = 16
         bubblebackgroundView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(bubblebackgroundView)
         

@@ -143,7 +143,10 @@ class ConversationsListViewController: UIViewController, ThemesViewControllerDel
         let defaults = UserDefaults.standard
         navigationController?.navigationBar.backgroundColor = selectedTheme
         selectedColor = selectedTheme
-        defaults.setColor(color: selectedTheme, forKey: "ThemeOfTheApp")
+        let queue = DispatchQueue.global(qos: .background)
+        queue.async {
+            defaults.setColor(color: selectedTheme, forKey: "ThemeOfTheApp")
+        }
         let colors = [UIColor.red:"Red", UIColor.yellow:"Yellow", UIColor.green:"Green", UIColor.white:"White"]
         if colors.keys.contains(selectedTheme) {
             print("User picked: \(colors[selectedTheme]!) color")
@@ -161,6 +164,7 @@ class ConversationsListViewController: UIViewController, ThemesViewControllerDel
             guard let userController = segue.destination as? ProfileViewController
                 else { return}
             userController.view.backgroundColor = selectedColor
+            userController.textFieldProfileName.backgroundColor = selectedColor
         }
         
         if segue.identifier == Segues.themesPickerSegueID {

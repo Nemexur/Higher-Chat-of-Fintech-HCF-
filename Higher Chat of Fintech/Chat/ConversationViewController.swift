@@ -41,6 +41,10 @@ class ConversationViewController: UIViewController {
     //MARK: - Messages Container
     
     fileprivate var messages: [Message] = []
+    
+    //MARK: - Placeholder for userMessage
+    
+    fileprivate let placeholderTextForTextView: String = "Message"
 
     //MARK: - Overrided UIViewController Functions
     
@@ -74,11 +78,14 @@ class ConversationViewController: UIViewController {
     
     
     private func setupIBOutletsAndNotifications() {
-        
+        userMessage.textColor = UIColor.lightGray
         userMessage.layer.cornerRadius = 15
         userMessage.delegate = self
         userMessage.layer.borderColor = UIColor.black.cgColor
         userMessage.layer.borderWidth = 1
+        userMessage.text = placeholderTextForTextView
+        userMessage.isEditable = true
+        userMessage.selectedRange = NSMakeRange(1, 0);
         chatTableView.transform = CGAffineTransform (scaleX: 1, y: -1);
         chatTableView.backgroundColor = UIColor(white: 0.90, alpha: 1)
         
@@ -188,6 +195,20 @@ extension ConversationViewController: UITextViewDelegate {
         let size = CGSize(width: view.frame.width, height: .infinity)
         _ = textView.sizeThatFits(size)
         inputMessageView.sizeThatFits(size)
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = placeholderTextForTextView
+            textView.textColor = UIColor.lightGray
+        }
     }
     
 }

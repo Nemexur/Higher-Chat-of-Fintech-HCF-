@@ -20,6 +20,10 @@
 		266A353B2166289500028668 /* ConversationCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266A353A2166289500028668 /* ConversationCellConfiguration.swift */; };
 		266A354D2166741B00028668 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266A354C2166741B00028668 /* ChatTableViewCell.swift */; };
 		266A35692167E99700028668 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266A35682167E99700028668 /* ConversationViewController.swift */; };
+		268EBEE02178CA94006DD494 /* OperationClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268EBEDF2178CA94006DD494 /* OperationClass.swift */; };
+		268EBEE22178CAA0006DD494 /* GCDClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268EBEE12178CAA0006DD494 /* GCDClass.swift */; };
+		268EBEE62178F0CD006DD494 /* SavingDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268EBEE52178F0CD006DD494 /* SavingDataProtocol.swift */; };
+		26A28BD3217CD18900C2824B /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A28BD2217CD18900C2824B /* StringExtension.swift */; };
 		26BAE5A7215D183000B3FA71 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26BAE5A6215D183000B3FA71 /* Profile.storyboard */; };
 		26C4B94D2155657000B3622B /* LoggingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C4B94C2155657000B3622B /* LoggingHelper.swift */; };
 		26F51F5921554ECA002D5EB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F51F5821554ECA002D5EB4 /* AppDelegate.swift */; };
@@ -46,6 +50,10 @@
 		266A353A2166289500028668 /* ConversationCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellConfiguration.swift; sourceTree = "<group>"; };
 		266A354C2166741B00028668 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
 		266A35682167E99700028668 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
+		268EBEDF2178CA94006DD494 /* OperationClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationClass.swift; sourceTree = "<group>"; };
+		268EBEE12178CAA0006DD494 /* GCDClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDClass.swift; sourceTree = "<group>"; };
+		268EBEE52178F0CD006DD494 /* SavingDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingDataProtocol.swift; sourceTree = "<group>"; };
+		26A28BD2217CD18900C2824B /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		26BAE5A6215D183000B3FA71 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		26C4B94C2155657000B3622B /* LoggingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingHelper.swift; sourceTree = "<group>"; };
 		26F51F5521554ECA002D5EB4 /* Higher Chat of Fintech.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Higher Chat of Fintech.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				26695F92216F83EE00255C85 /* UserDefaultsExtension.swift */,
+				26A28BD2217CD18900C2824B /* StringExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -110,6 +119,7 @@
 			children = (
 				266A35372166242F00028668 /* MessageCellConfiguration.swift */,
 				266A353A2166289500028668 /* ConversationCellConfiguration.swift */,
+				268EBEE52178F0CD006DD494 /* SavingDataProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -146,6 +156,15 @@
 				26F51F5821554ECA002D5EB4 /* AppDelegate.swift */,
 			);
 			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		268EBEDE2178CA6D006DD494 /* Classes to Save Data */ = {
+			isa = PBXGroup;
+			children = (
+				268EBEDF2178CA94006DD494 /* OperationClass.swift */,
+				268EBEE12178CAA0006DD494 /* GCDClass.swift */,
+			);
+			path = "Classes to Save Data";
 			sourceTree = "<group>";
 		};
 		26BAE5A8215D186B00B3FA71 /* Storyboards */ = {
@@ -185,6 +204,7 @@
 		26F51F5721554ECA002D5EB4 /* Higher Chat of Fintech */ = {
 			isa = PBXGroup;
 			children = (
+				268EBEDE2178CA6D006DD494 /* Classes to Save Data */,
 				266A35652167D97F00028668 /* AppDelegate */,
 				266A35392166243A00028668 /* Protocols */,
 				26695F91216F83C900255C85 /* Extensions */,
@@ -278,13 +298,17 @@
 			files = (
 				265114C82170B52400938317 /* ThemesPickerViewControllerSwift.swift in Sources */,
 				266A353B2166289500028668 /* ConversationCellConfiguration.swift in Sources */,
+				268EBEE62178F0CD006DD494 /* SavingDataProtocol.swift in Sources */,
 				26F51F5B21554ECA002D5EB4 /* ViewController.swift in Sources */,
 				266A35322165EE1400028668 /* ConversationsListViewController.swift in Sources */,
 				266A35342165F34600028668 /* ConversationTableViewCell.swift in Sources */,
 				26C4B94D2155657000B3622B /* LoggingHelper.swift in Sources */,
 				26695F90216F530C00255C85 /* Themes.m in Sources */,
 				266997852168FF5000FC0F6D /* Conversation.swift in Sources */,
+				268EBEE02178CA94006DD494 /* OperationClass.swift in Sources */,
+				268EBEE22178CAA0006DD494 /* GCDClass.swift in Sources */,
 				26698454215D133200B32A24 /* ProfileViewController.swift in Sources */,
+				26A28BD3217CD18900C2824B /* StringExtension.swift in Sources */,
 				266A354D2166741B00028668 /* ChatTableViewCell.swift in Sources */,
 				266A35382166242F00028668 /* MessageCellConfiguration.swift in Sources */,
 				26695F93216F83EE00255C85 /* UserDefaultsExtension.swift in Sources */,
