@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		263635282181B180000E3629 /* CommunicatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263635272181B180000E3629 /* CommunicatorProtocol.swift */; };
+		2636352A2181B38A000E3629 /* GenerateMessageID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263635292181B38A000E3629 /* GenerateMessageID.swift */; };
+		2636352C2181B497000E3629 /* PeerToPeerCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2636352B2181B497000E3629 /* PeerToPeerCommunicator.swift */; };
+		2636352E21820FE3000E3629 /* CommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2636352D21820FE3000E3629 /* CommunicationManager.swift */; };
+		26363530218211C4000E3629 /* CommunicationManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2636352F218211C4000E3629 /* CommunicationManagerDelegate.swift */; };
 		265114C82170B52400938317 /* ThemesPickerViewControllerSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265114C72170B52400938317 /* ThemesPickerViewControllerSwift.swift */; };
 		26695F7E216F37F500255C85 /* ThemesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26695F7D216F37F500255C85 /* ThemesViewController.m */; };
 		26695F90216F530C00255C85 /* Themes.m in Sources */ = {isa = PBXBuildFile; fileRef = 26695F8F216F530C00255C85 /* Themes.m */; };
@@ -34,6 +39,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		263635272181B180000E3629 /* CommunicatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicatorProtocol.swift; sourceTree = "<group>"; };
+		263635292181B38A000E3629 /* GenerateMessageID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateMessageID.swift; sourceTree = "<group>"; };
+		2636352B2181B497000E3629 /* PeerToPeerCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerToPeerCommunicator.swift; sourceTree = "<group>"; };
+		2636352D21820FE3000E3629 /* CommunicationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationManager.swift; sourceTree = "<group>"; };
+		2636352F218211C4000E3629 /* CommunicationManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationManagerDelegate.swift; sourceTree = "<group>"; };
 		265114C72170B52400938317 /* ThemesPickerViewControllerSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesPickerViewControllerSwift.swift; sourceTree = "<group>"; };
 		26695F7B216F37F500255C85 /* Higher Chat of Fintech-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Higher Chat of Fintech-Bridging-Header.h"; sourceTree = "<group>"; };
 		26695F7C216F37F500255C85 /* ThemesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThemesViewController.h; sourceTree = "<group>"; };
@@ -76,6 +86,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		263635262181B134000E3629 /* Multipeer Communicator */ = {
+			isa = PBXGroup;
+			children = (
+				2636353121827122000E3629 /* Protocols */,
+				2636352B2181B497000E3629 /* PeerToPeerCommunicator.swift */,
+				2636352D21820FE3000E3629 /* CommunicationManager.swift */,
+			);
+			path = "Multipeer Communicator";
+			sourceTree = "<group>";
+		};
+		2636353121827122000E3629 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				263635272181B180000E3629 /* CommunicatorProtocol.swift */,
+				2636352F218211C4000E3629 /* CommunicationManagerDelegate.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		26695F7A216F375C00255C85 /* Theme Picker */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				26C4B94C2155657000B3622B /* LoggingHelper.swift */,
+				263635292181B38A000E3629 /* GenerateMessageID.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -204,16 +234,17 @@
 		26F51F5721554ECA002D5EB4 /* Higher Chat of Fintech */ = {
 			isa = PBXGroup;
 			children = (
-				268EBEDE2178CA6D006DD494 /* Classes to Save Data */,
 				266A35652167D97F00028668 /* AppDelegate */,
 				266A35392166243A00028668 /* Protocols */,
 				26695F91216F83C900255C85 /* Extensions */,
+				268EBEDE2178CA6D006DD494 /* Classes to Save Data */,
 				266997832168FF3200FC0F6D /* Classes For Dialogs */,
 				26695F80216F43DE00255C85 /* Classes For Themes */,
 				26BAE5A8215D186B00B3FA71 /* Storyboards */,
 				26C4B94B2155654900B3622B /* Supporting Files */,
 				266A35642167D96E00028668 /* Profile */,
 				26695F7A216F375C00255C85 /* Theme Picker */,
+				263635262181B134000E3629 /* Multipeer Communicator */,
 				266A35612167D92600028668 /* ConversationsList */,
 				266A35632167D94900028668 /* Chat */,
 				26F51F5A21554ECA002D5EB4 /* ViewController.swift */,
@@ -298,10 +329,12 @@
 			files = (
 				265114C82170B52400938317 /* ThemesPickerViewControllerSwift.swift in Sources */,
 				266A353B2166289500028668 /* ConversationCellConfiguration.swift in Sources */,
+				263635282181B180000E3629 /* CommunicatorProtocol.swift in Sources */,
 				268EBEE62178F0CD006DD494 /* SavingDataProtocol.swift in Sources */,
 				26F51F5B21554ECA002D5EB4 /* ViewController.swift in Sources */,
 				266A35322165EE1400028668 /* ConversationsListViewController.swift in Sources */,
 				266A35342165F34600028668 /* ConversationTableViewCell.swift in Sources */,
+				2636352A2181B38A000E3629 /* GenerateMessageID.swift in Sources */,
 				26C4B94D2155657000B3622B /* LoggingHelper.swift in Sources */,
 				26695F90216F530C00255C85 /* Themes.m in Sources */,
 				266997852168FF5000FC0F6D /* Conversation.swift in Sources */,
@@ -314,7 +347,10 @@
 				26695F93216F83EE00255C85 /* UserDefaultsExtension.swift in Sources */,
 				266997872168FF7300FC0F6D /* Message.swift in Sources */,
 				266A35692167E99700028668 /* ConversationViewController.swift in Sources */,
+				26363530218211C4000E3629 /* CommunicationManagerDelegate.swift in Sources */,
 				26F51F5921554ECA002D5EB4 /* AppDelegate.swift in Sources */,
+				2636352C2181B497000E3629 /* PeerToPeerCommunicator.swift in Sources */,
+				2636352E21820FE3000E3629 /* CommunicationManager.swift in Sources */,
 				26695F7E216F37F500255C85 /* ThemesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

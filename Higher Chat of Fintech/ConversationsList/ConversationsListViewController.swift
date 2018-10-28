@@ -24,8 +24,7 @@ struct Segues {
     private init() { }
 }
 
-class ConversationsListViewController: UIViewController, ThemesViewControllerDelegate {
-    
+class ConversationsListViewController: UIViewController, ThemesViewControllerDelegate, CommunicationManagerDelegate {
     //MARK: - IBOutlets
     
     @IBOutlet weak var conversationsTableView: UITableView!
@@ -42,10 +41,12 @@ class ConversationsListViewController: UIViewController, ThemesViewControllerDel
     
     var chooseThemePickerViewAvailable: Bool = true
     
+    var communicatorManager: CommunicationManager?
+    
     //MARK: - HardCoded Conversations Information
     
     var userchats: [Conversation] = [
-        Conversation(name: "Andrei", lastMessage: nil, date: "07-10-2018 16:09", online: false, hasUnreadMessages: false),
+        /*Conversation(name: "Andrei", lastMessage: nil, date: "07-10-2018 16:09", online: false, hasUnreadMessages: false),
         Conversation(name: "Alex", lastMessage: "Never gonna give you up. Never gonna see your smile", date: "14-09-2018 16:09", online: true, hasUnreadMessages: true),
         Conversation(name: "Oleg", lastMessage: "I dont know what to do right now cause im busy", date: "15-10-2017 20:09", online: true, hasUnreadMessages: true),
         Conversation(name: "Johny", lastMessage: "I dont know what to write", date: "06-10-2018 16:09", online: true, hasUnreadMessages: false),
@@ -59,7 +60,7 @@ class ConversationsListViewController: UIViewController, ThemesViewControllerDel
         Conversation(name: "Dima", lastMessage: "Say YES", date: "07-10-2018 15:09", online: false, hasUnreadMessages: true),
         Conversation(name: "Tair", lastMessage: "How do you do?", date: "04-09-2018 15:30", online: true, hasUnreadMessages: true),
         Conversation(name: "Roma", lastMessage: "Where do you live?", date: "20-02-2002 13:20", online: false, hasUnreadMessages: true),
-        Conversation(name: "Mary", lastMessage: nil, date: "13-09-2018 17:12", online: true)
+        Conversation(name: "Mary", lastMessage: nil, date: "13-09-2018 17:12", online: true)*/
     ]
 
     //MARK: - Overrided UIViewController Functions
@@ -67,15 +68,23 @@ class ConversationsListViewController: UIViewController, ThemesViewControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
-        let allocatedUsers = allocateUsers(users: userchats)
-        sectionData[0] = allocatedUsers.online
-        sectionData[1] = allocatedUsers.offline
+        communicatorManager = CommunicationManager()
+        sectionData[0] = []
+        sectionData[1] = []
+        conversationsTableView.alpha = 0
+        conversationsTableView.tableFooterView = UIView()
         selectedColor = self.view.backgroundColor
         let defaults = UserDefaults.standard
         if let color = defaults.colorForKey(key: "ThemeOfTheApp") {
             selectedColor = color
-            navigationController?.navigationBar.backgroundColor = selectedColor
+            self.view.backgroundColor = selectedColor
+            navigationController?.navigationBar.barTintColor = selectedColor
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        reloadTableViewElements()
+        communicatorManager?.delegate = self
     }
 
     //MARK: - Do something with Navigation Bar
@@ -113,6 +122,23 @@ class ConversationsListViewController: UIViewController, ThemesViewControllerDel
     
     //MARK: - Additional Functions
     
+    private func reloadTableViewElements() {
+        let allocatedUsers = self.allocateUsers(users: userchats)
+        sectionData[0] = allocatedUsers.online.sorted(by: {
+            if      $0.date == nil && $1.date == nil { return $0.name! < $1.name! }
+            else if $0.date == nil && $1.date != nil { return false}
+            else if $0.date != nil && $1.date == nil { return true }
+            else                                     { return $0.date! > $1.date! }
+        })
+        sectionData[1] = allocatedUsers.offline.sorted(by: {
+            if      $0.date == nil && $1.date == nil { return $0.name! < $1.name! }
+            else if $0.date == nil && $1.date != nil { return false}
+            else if $0.date != nil && $1.date == nil { return true }
+            else                                     { return $0.date! > $1.date! }
+        })
+        conversationsTableView.reloadData()
+    }
+    
     private func displayChooseThemePickerView(_ view: UIView) {
         chooseThemePickerViewAvailable.toggle()
         UIView.animate(withDuration: 0.7,
@@ -141,23 +167,71 @@ class ConversationsListViewController: UIViewController, ThemesViewControllerDel
 
     func logThemeChanging(selectedTheme: UIColor) {
         let defaults = UserDefaults.standard
-        navigationController?.navigationBar.backgroundColor = selectedTheme
+        self.view.backgroundColor = selectedTheme
+        UINavigationBar.appearance().barTintColor = selectedTheme
         selectedColor = selectedTheme
         let queue = DispatchQueue.global(qos: .background)
-        queue.async {
-            defaults.setColor(color: selectedTheme, forKey: "ThemeOfTheApp")
-        }
+        queue.async { defaults.setColor(color: selectedTheme, forKey: "ThemeOfTheApp") }
         let colors = [UIColor.red:"Red", UIColor.yellow:"Yellow", UIColor.green:"Green", UIColor.white:"White"]
         if colors.keys.contains(selectedTheme) {
             print("User picked: \(colors[selectedTheme]!) color")
         }
     }
     
+    func receiveNewMessage(text: String, fromUser: String, toUser: String) {
+        if let userIndex = userchats.index(where: {$0.id == fromUser}) {
+            let receivedMessage = Message(text: text, isIncoming: true)
+            var newMessages = userchats[userIndex].messages
+            newMessages?.insert(receivedMessage, at: 0)
+            userchats[userIndex].messages = newMessages
+            userchats[userIndex].lastMessage = receivedMessage.text
+            userchats[userIndex].date = Date()
+            userchats[userIndex].hasUnreadMessages = true
+            DispatchQueue.main.async {
+                self.reloadTableViewElements()
+            }
+        }
+    }
+    
+    func sendNewMessage(text: String, fromUser: String, toUser: String) { }
+    
+    func newUser(userID: String, userName: String) {
+        if !userchats.contains(where: {$0.id == userID}) {
+            userchats.append(Conversation(id: userID, name: userName, lastMessage: nil, date: nil, online: true))
+        } else {
+            if let userIndex = userchats.index(where: {$0.id == userID}) {
+                userchats[userIndex].online? = true
+            }
+        }
+        DispatchQueue.main.async {
+            self.reloadTableViewElements()
+            UIView.animate(withDuration: 0.5) {
+                self.conversationsTableView.alpha = 1
+            }
+        }
+    }
+    
+    func lostUser(userID: String) {
+        if let userIndex = userchats.index(where: {$0.id == userID}) {
+            userchats[userIndex].online? = false
+        }
+        DispatchQueue.main.async {
+            self.reloadTableViewElements()
+        }
+    }
+    
+    //MARK: - Prepare for Segues
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Segues.chatSegueID {
-            guard let controller = segue.destination as? ConversationViewController
+            guard let chatController = segue.destination as? ConversationViewController
                 else { return }
-            controller.user = sender as? Conversation
+            chatController.user = sender as? Conversation
+            chatController.userDevice = communicatorManager?.userName
+            chatController.communicatorManager = communicatorManager
+            chatController.view.backgroundColor = selectedColor
+            chatController.inputMessageView.backgroundColor = selectedColor
+            chatController.conversationsListViewController = self
         }
         
         if segue.identifier == Segues.profileSegueID {
@@ -186,22 +260,22 @@ class ConversationsListViewController: UIViewController, ThemesViewControllerDel
             themesPickerSwiftController.view.backgroundColor = selectedColor
         }
     }
-}
-
-//MARK: - Allocate Users Functions
-
-private func allocateUsers(users: [Conversation]) -> (online: [Conversation], offline: [Conversation]){
     
-    var offlineUsers:[Conversation] = []
-    var onlineUsers: [Conversation] = []
-    for user in users {
-        if user.online == false {
-            offlineUsers.append(user)
-        } else {
-            onlineUsers.append(user)
+    //MARK: - Allocate Users Functions
+    
+    private func allocateUsers(users: [Conversation]) -> (online: [Conversation], offline: [Conversation]){
+        
+        var offlineUsers:[Conversation] = []
+        var onlineUsers: [Conversation] = []
+        for user in users {
+            if user.online == false {
+                offlineUsers.append(user)
+            } else {
+                onlineUsers.append(user)
+            }
         }
+        return(onlineUsers, offlineUsers)
     }
-    return(onlineUsers, offlineUsers)
 }
 
 //MARK: - Extensions for UITableView

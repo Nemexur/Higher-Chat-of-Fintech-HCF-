@@ -89,15 +89,6 @@ class GCDDataManager: SavingDataProtocol {
             defaults.set(profileName, forKey: "ProfileName")
             defaults.set(profileDescription, forKey: "ProfileDescription")
         }
-        if defaults.object(forKey: "ProfileDescription") == nil || defaults.object(forKey: "ProfileName") == nil {
-            DispatchQueue.main.async {
-                guard let errorfunction = self.errorFunction,
-                    let buttonsAndIndicatorAlpha = self.buttonsAndIndicatorAppearance
-                    else { return }
-                errorfunction()
-                buttonsAndIndicatorAlpha()
-            }
-        }
     }
     
     //MARK: - Work With FileManager

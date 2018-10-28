@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class Conversation {
+    var id: String?
     var name: String?
     var messages: [Message]?
     var lastMessage: String?
@@ -18,21 +19,19 @@ class Conversation {
     var hasUnreadMessages: Bool?
     
     
-    init(name: String,
-         messages: [Message] = [],
+    init(id: String,
+         name: String,
+         messages: [Message]? = [],
          lastMessage: String?,
-         date: String,
-         online: Bool,
+         date: Date?,
+         online: Bool?,
          hasUnreadMessages: Bool = false) {
         
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM-yyyy HH:mm"
-        let newdate = formatter.date(from: date)
-        
+        self.id = id
         self.name = name
         self.messages = messages
         self.lastMessage = lastMessage
-        self.date = newdate
+        self.date = date
         self.online = online
         self.hasUnreadMessages = hasUnreadMessages
     }

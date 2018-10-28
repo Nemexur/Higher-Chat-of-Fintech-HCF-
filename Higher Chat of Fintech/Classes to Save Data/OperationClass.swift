@@ -46,14 +46,12 @@ class OperationDataManager: Operation, SavingDataProtocol {
     
     func saveData() {
         let operationQueue = OperationQueue()
-        let semaphore = DispatchSemaphore(value: 0)
         operationQueue.qualityOfService = .userInitiated
         operationQueue.addOperation {
             self.saveNewProfileInformation()
             self.saveImageViaFileManager()
-            semaphore.signal()
         }
-        _ = semaphore.wait(timeout: .distantFuture)
+        operationQueue.waitUntilAllOperationsAreFinished()
     }
     
     //MARK: - Saving Data
@@ -91,15 +89,6 @@ class OperationDataManager: Operation, SavingDataProtocol {
             defaults.set(profileName, forKey: "ProfileName")
             defaults.set(profileDescription, forKey: "ProfileDescription")
         }
-        if defaults.object(forKey: "ProfileDescription") == nil || defaults.object(forKey: "ProfileName") == nil {
-            OperationQueue.main.addOperation {
-                guard let errorfunction = self.errorFunction,
-                    let buttonsAndIndicatorAlpha = self.buttonsAndIndicatorAppearance
-                    else { return }
-                errorfunction()
-                buttonsAndIndicatorAlpha()
-            }
-        }
     }
     
     //MARK: - Work With FileManager
@@ -108,7 +97,6 @@ class OperationDataManager: Operation, SavingDataProtocol {
         let defaults = UserDefaults.standard
         let operation = OperationQueue()
         operation.qualityOfService = .userInteractive
-        let semaphore = DispatchSemaphore(value: 0)
         operation.addOperation {
             if let image = self.getImage() {
                 self.imageToDeliver = image
@@ -122,9 +110,8 @@ class OperationDataManager: Operation, SavingDataProtocol {
                 self.profileDescriptionToDeliver = description
                 self.profileDescriptionChecker = description
             }
-            semaphore.signal()
         }
-        _ = semaphore.wait(timeout: .distantFuture)
+        operation.waitUntilAllOperationsAreFinished()
         return (profileNameToDeliver, profileDescriptionToDeliver, imageToDeliver)
     }
     

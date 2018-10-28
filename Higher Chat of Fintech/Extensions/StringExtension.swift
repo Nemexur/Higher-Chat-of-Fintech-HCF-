@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 extension String {
-    var withoutSpecialCharacters: String {
-        let availableCharacters = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890+-=().!_")
+    var withoutSpecialCharacters: String? {
+        let availableCharacters = Set("abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя ABCDEFGHIJKLKMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ1234567890+-=().!_")
         return self.filter { availableCharacters.contains($0) }
     }
 }

@@ -18,7 +18,7 @@ struct CellID {
     private init() { }
 }
 
-class ConversationViewController: UIViewController {
+class ConversationViewController: UIViewController, CommunicationManagerDelegate {
     
     //MARK: - IBOutlets
     
@@ -32,11 +32,19 @@ class ConversationViewController: UIViewController {
 
     @IBOutlet var bottomConstraintOfInputMessageView: NSLayoutConstraint!
     
+    //MARK: - Variables
+    
     var user: Conversation? {
         didSet {
             navigationItem.title = user!.name
         }
     }
+    
+    var userDevice: String!
+    
+    var communicatorManager: CommunicationManager?
+    
+    weak var conversationsListViewController: ConversationsListViewController?
     
     //MARK: - Messages Container
     
@@ -45,25 +53,47 @@ class ConversationViewController: UIViewController {
     //MARK: - Placeholder for userMessage
     
     fileprivate let placeholderTextForTextView: String = "Message"
-
+    
     //MARK: - Overrided UIViewController Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if user?.lastMessage != nil && user?.hasUnreadMessages == false {
-            messages.append(Message(text: user?.lastMessage, isIncoming: true))
+        if user?.online == false {
+            completedMessage.isEnabled = false
+            completedMessage.alpha = 0.66
         }
+        inputMessageView.layer.borderColor = UIColor.lightGray.cgColor
+        inputMessageView.layer.borderWidth = 1
+        if let userMessages = user?.messages { messages = userMessages }
         let tapToHideKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyBoard))
         view.addGestureRecognizer(tapToHideKeyboard)
         setupIBOutletsAndNotifications()
         textViewDidChange(userMessage)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        communicatorManager?.delegate = self
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        conversationsListViewController = nil
+    }
+    
     //MARK: - Button Actions
     
     @IBAction func buttonForMessagePressed(_ sender: Any) {
-        if userMessage.text != nil {
-            messages.insert(Message(text: userMessage.text, isIncoming: false), at: 0)
+        if userMessage.text.withoutSpecialCharacters != nil && userMessage.text.withoutSpecialCharacters != "" && userMessage.text != placeholderTextForTextView {
+            let newMessage = Message(text: userMessage.text, isIncoming: false)
+            messages.insert(newMessage, at: 0)
+            user?.messages?.insert(newMessage, at: 0)
+            user?.lastMessage = "(ME) \(newMessage.text!)"
+            user?.hasUnreadMessages = false
+            user?.date = Date()
+            guard let toUser = user?.name
+                else { return }
+            sendNewMessage(text: userMessage.text, fromUser: userDevice, toUser: toUser)
             userMessage.text = nil
             chatTableView.reloadData()
             chatTableView.transform = CGAffineTransform (scaleX: 1, y: -1);
@@ -75,7 +105,6 @@ class ConversationViewController: UIViewController {
     @objc private func hideKeyBoard() {
         userMessage.resignFirstResponder()
     }
-    
     
     private func setupIBOutletsAndNotifications() {
         userMessage.textColor = UIColor.lightGray
@@ -99,6 +128,66 @@ class ConversationViewController: UIViewController {
         notifications.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillHideNotification, object: nil)
         notifications.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
+    }
+    
+    //MARK: - Delegate Functions
+    
+    func receiveNewMessage(text: String, fromUser: String, toUser: String) {
+        let newMessage = Message(text: text, isIncoming: true)
+        guard let profileName = user?.name
+            else { return }
+        if fromUser == profileName {
+            messages.insert(newMessage, at: 0)
+            user?.messages?.insert(newMessage, at: 0)
+            user?.lastMessage = newMessage.text
+            user?.hasUnreadMessages = false
+            user?.date = Date()
+            chatTableView.reloadData()
+        } else {
+            if let userIndex = conversationsListViewController?.userchats.index(where: {$0.id == fromUser}) {
+                conversationsListViewController?.userchats[userIndex].messages?.insert(newMessage, at: 0)
+                conversationsListViewController?.userchats[userIndex].lastMessage = newMessage.text
+                conversationsListViewController?.userchats[userIndex].hasUnreadMessages = true
+                conversationsListViewController?.userchats[userIndex].date = Date()
+            }
+        }
+    }
+    
+    func sendNewMessage(text: String, fromUser: String, toUser: String) {
+        if let sessionIndex = communicatorManager?.communicator?.sessions.index(where: {$0.connectedPeers.contains(where: {$0.displayName == toUser})}) {
+            communicatorManager?.communicator?.sessions[sessionIndex].delegate = communicatorManager?.communicator
+        }
+        for session in (communicatorManager?.communicator?.sessions)! {
+            print("\(session.connectedPeers.count) users in session")
+        }
+        communicatorManager?.communicator?.sendMessage(string: text, to: toUser) {
+            success, error in
+            if success == false {
+                guard let receivedError = error
+                    else { return }
+                print(receivedError.localizedDescription)
+            } else {
+                print("----- Message has been sent successfully -----")
+            }
+        }
+    }
+    
+    func newUser(userID: String, userName: String) {
+        guard let checkUser = conversationsListViewController?.userchats.contains(where: {$0.id == userID})
+            else { return }
+        if !checkUser {
+            conversationsListViewController?.userchats.append(Conversation(id: userID, name: userName, lastMessage: nil, date: nil, online: true))
+        } else {
+            if let userIndex = conversationsListViewController?.userchats.index(where: {$0.id == userID}) {
+                conversationsListViewController?.userchats[userIndex].online? = true
+            }
+        }
+    }
+    
+    func lostUser(userID: String) {
+        if let userIndex = conversationsListViewController?.userchats.index(where: {$0.id == userID}) {
+            conversationsListViewController?.userchats[userIndex].online? = false
+        }
     }
     
     //MARK: - Selector Functions
@@ -142,7 +231,7 @@ class ConversationViewController: UIViewController {
     }
     
     deinit {
-        print("----- ConversationViewController has been deinitiolized -----")
+        print("----- ConversationViewController has been deinitialized -----")
         self.removeFromParent()
     }
 }
@@ -183,7 +272,7 @@ extension ConversationViewController: UITableViewDataSource {
                                                         message: messages[indexPath.row]) as! ChatTableViewCell
             }
         }
-        
+        cellFinal.isUserInteractionEnabled = false
         cellFinal.transform = CGAffineTransform (scaleX: 1, y: -1);
         return cellFinal
     }

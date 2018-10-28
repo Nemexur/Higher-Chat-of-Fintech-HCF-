@@ -62,19 +62,19 @@ class ThemesPickerViewControllerSwift: UIViewController {
     //MARK: - Button Actions
     
     @IBAction func pickTheme1(_ sender: Any) {
-        setDelegateThemes(theme: themes.theme1())
+        setDelegateThemes(theme: themes.theme1)
     }
     
     @IBAction func pickTheme2(_ sender: Any) {
-        setDelegateThemes(theme: themes.theme2())
+        setDelegateThemes(theme: themes.theme2)
     }
     
     @IBAction func pickTheme3(_ sender: Any) {
-        setDelegateThemes(theme: themes.theme3())
+        setDelegateThemes(theme: themes.theme3)
     }
     
     @IBAction func pickDefaultTheme(_ sender: Any) {
-        setDelegateThemes(theme: themes.defaultTheme())
+        setDelegateThemes(theme: themes.defaultTheme)
     }
     
 }

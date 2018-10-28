@@ -19,7 +19,6 @@ public class Message {
         self.isIncoming = isIncoming
     }
     
-    
     init() { }
     
 }

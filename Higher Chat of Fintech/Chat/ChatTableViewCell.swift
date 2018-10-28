@@ -38,25 +38,25 @@ class ChatTableViewCell: UITableViewCell, MessageCellConfiguration {
         
         //MARK: - Configure BubbleBackgroundView
         
-        bubblebackgroundView.layer.cornerRadius = 16
+        bubblebackgroundView.layer.cornerRadius = 15
         bubblebackgroundView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(bubblebackgroundView)
         
         //MARK: - Configure MessageLabel
         
         addSubview(messageLabel)
-        messageLabel.font = UIFont(name: fontFamilyType, size: 14)
+        messageLabel.font = UIFont(name: fontFamilyType, size: 16)
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //MARK: - Value of Constraints
         let constraints = [
-            messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 32),
-            messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -32),
+            messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+            messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
             messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 200),
             
-            bubblebackgroundView.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -16),
+            bubblebackgroundView.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -10),
             bubblebackgroundView.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor, constant: -16),
-            bubblebackgroundView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 16),
+            bubblebackgroundView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 10),
             bubblebackgroundView.trailingAnchor.constraint(equalTo: messageLabel.trailingAnchor, constant: 16)
         ]
         
