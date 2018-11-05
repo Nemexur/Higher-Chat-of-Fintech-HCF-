@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2604D923218AFF4000787678 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2604D922218AFF4000787678 /* CoreDataStack.swift */; };
+		2604D926218AFFDC00787678 /* ModelForCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2604D924218AFFDC00787678 /* ModelForCoreData.xcdatamodeld */; };
+		2604D92A218B152400787678 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2604D929218B152400787678 /* AppUser.swift */; };
+		2604D92C218B177F00787678 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2604D92B218B177F00787678 /* User.swift */; };
+		2604D92E218B1A4800787678 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2604D92D218B1A4800787678 /* StorageManager.swift */; };
 		263635282181B180000E3629 /* CommunicatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263635272181B180000E3629 /* CommunicatorProtocol.swift */; };
 		2636352A2181B38A000E3629 /* GenerateMessageID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263635292181B38A000E3629 /* GenerateMessageID.swift */; };
 		2636352C2181B497000E3629 /* PeerToPeerCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2636352B2181B497000E3629 /* PeerToPeerCommunicator.swift */; };
@@ -39,6 +44,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2604D922218AFF4000787678 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		2604D925218AFFDC00787678 /* ModelForCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ModelForCoreData.xcdatamodel; sourceTree = "<group>"; };
+		2604D929218B152400787678 /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
+		2604D92B218B177F00787678 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		2604D92D218B1A4800787678 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		263635272181B180000E3629 /* CommunicatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicatorProtocol.swift; sourceTree = "<group>"; };
 		263635292181B38A000E3629 /* GenerateMessageID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateMessageID.swift; sourceTree = "<group>"; };
 		2636352B2181B497000E3629 /* PeerToPeerCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerToPeerCommunicator.swift; sourceTree = "<group>"; };
@@ -86,6 +96,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2604D927218AFFFF00787678 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2604D924218AFFDC00787678 /* ModelForCoreData.xcdatamodeld */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2604D928218B002200787678 /* Entities Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2604D929218B152400787678 /* AppUser.swift */,
+				2604D92B218B177F00787678 /* User.swift */,
+			);
+			path = "Entities Extensions";
+			sourceTree = "<group>";
+		};
 		263635262181B134000E3629 /* Multipeer Communicator */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,6 +242,17 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		26ECFD26218A42220026881A /* CoreData Helper */ = {
+			isa = PBXGroup;
+			children = (
+				2604D927218AFFFF00787678 /* Models */,
+				2604D928218B002200787678 /* Entities Extensions */,
+				2604D922218AFF4000787678 /* CoreDataStack.swift */,
+				2604D92D218B1A4800787678 /* StorageManager.swift */,
+			);
+			path = "CoreData Helper";
+			sourceTree = "<group>";
+		};
 		26F51F4C21554ECA002D5EB4 = {
 			isa = PBXGroup;
 			children = (
@@ -237,6 +275,7 @@
 				266A35652167D97F00028668 /* AppDelegate */,
 				266A35392166243A00028668 /* Protocols */,
 				26695F91216F83C900255C85 /* Extensions */,
+				26ECFD26218A42220026881A /* CoreData Helper */,
 				268EBEDE2178CA6D006DD494 /* Classes to Save Data */,
 				266997832168FF3200FC0F6D /* Classes For Dialogs */,
 				26695F80216F43DE00255C85 /* Classes For Themes */,
@@ -327,6 +366,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2604D92A218B152400787678 /* AppUser.swift in Sources */,
 				265114C82170B52400938317 /* ThemesPickerViewControllerSwift.swift in Sources */,
 				266A353B2166289500028668 /* ConversationCellConfiguration.swift in Sources */,
 				263635282181B180000E3629 /* CommunicatorProtocol.swift in Sources */,
@@ -334,9 +374,11 @@
 				26F51F5B21554ECA002D5EB4 /* ViewController.swift in Sources */,
 				266A35322165EE1400028668 /* ConversationsListViewController.swift in Sources */,
 				266A35342165F34600028668 /* ConversationTableViewCell.swift in Sources */,
+				2604D92C218B177F00787678 /* User.swift in Sources */,
 				2636352A2181B38A000E3629 /* GenerateMessageID.swift in Sources */,
 				26C4B94D2155657000B3622B /* LoggingHelper.swift in Sources */,
 				26695F90216F530C00255C85 /* Themes.m in Sources */,
+				2604D926218AFFDC00787678 /* ModelForCoreData.xcdatamodeld in Sources */,
 				266997852168FF5000FC0F6D /* Conversation.swift in Sources */,
 				268EBEE02178CA94006DD494 /* OperationClass.swift in Sources */,
 				268EBEE22178CAA0006DD494 /* GCDClass.swift in Sources */,
@@ -346,10 +388,12 @@
 				266A35382166242F00028668 /* MessageCellConfiguration.swift in Sources */,
 				26695F93216F83EE00255C85 /* UserDefaultsExtension.swift in Sources */,
 				266997872168FF7300FC0F6D /* Message.swift in Sources */,
+				2604D923218AFF4000787678 /* CoreDataStack.swift in Sources */,
 				266A35692167E99700028668 /* ConversationViewController.swift in Sources */,
 				26363530218211C4000E3629 /* CommunicationManagerDelegate.swift in Sources */,
 				26F51F5921554ECA002D5EB4 /* AppDelegate.swift in Sources */,
 				2636352C2181B497000E3629 /* PeerToPeerCommunicator.swift in Sources */,
+				2604D92E218B1A4800787678 /* StorageManager.swift in Sources */,
 				2636352E21820FE3000E3629 /* CommunicationManager.swift in Sources */,
 				26695F7E216F37F500255C85 /* ThemesViewController.m in Sources */,
 			);
@@ -558,6 +602,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		2604D924218AFFDC00787678 /* ModelForCoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2604D925218AFFDC00787678 /* ModelForCoreData.xcdatamodel */,
+			);
+			currentVersion = 2604D925218AFFDC00787678 /* ModelForCoreData.xcdatamodel */;
+			path = ModelForCoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 26F51F4D21554ECA002D5EB4 /* Project object */;
 }

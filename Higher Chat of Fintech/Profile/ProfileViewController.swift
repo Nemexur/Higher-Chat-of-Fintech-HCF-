@@ -22,6 +22,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     @IBOutlet var textFieldProfileName: UITextField!
     @IBOutlet var textViewProfileDescription: UITextView!
     @IBOutlet var textViewCharacterCounter: UILabel!
+    @IBOutlet var CoreDataButton: UIButton!
     @IBOutlet var stackViewWithSavingButtons: UIStackView!
     @IBOutlet var GCDButton: UIButton!
     @IBOutlet var OperationButton: UIButton!
@@ -43,7 +44,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     
     private struct CornerRadiusDefinition {
         static let profileImageAndEditProfileImageButton = 35
-        static let editButton = 10
+        static let editAndSaveButton = 10
         static let topBarProfileView = 10
         static let OperationAndGCDButtonCorner = 10
         static let topBarEditViewCorner = 10
@@ -72,6 +73,8 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     
     private let textLimit: Int = 70
     
+    private let storageManager: StorageManager = StorageManager.shared()
+    
     //MARK: - Data Checker
     
     private var imageChecker: UIImage = UIImage()
@@ -90,9 +93,11 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         profileName.text = nil
         profileDescription.text = nil
         
+        getDataCoreData()
+        //FIXME: - Uncomment if you need GCD/Operation saving
         //FIXME: - To Check Different Data Methods Uncomment/Comment a line
-        //getDataGCD()
-        getDataOperation()
+//        getDataGCD()
+//        getDataOperation()
         
         let tapToHideKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyBoard))
         view.addGestureRecognizer(tapToHideKeyboard)
@@ -115,12 +120,12 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         textViewProfileDescription.resignFirstResponder()
     }
     
-    @objc private func textFieldDidChange(_ textField: UITextField) {
-        if profileNameChecker != textField.text {
-            buttonsAvailability(GCDButton, availability: true)
-            buttonsAvailability(OperationButton, availability: true)
-            buttonsAvailability(editButton, availability: true)
-        }
+    private func successCompletionHandler() {
+        finishedSavingDataAlert()
+        buttonsAvailability(self.GCDButton, availability: false)
+        buttonsAvailability(self.OperationButton, availability: false)
+        buttonsAvailability(self.editButton, availability: true)
+        savingIndicator.stopAnimating()
     }
     
     private func buttonsAvailability(_ button: UIButton, availability: Bool) {
@@ -160,11 +165,13 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     }
     
     private func setupBordersForImagesAndButtons() {
-        
         editProfileImageButton.layer.cornerRadius = CGFloat(CornerRadiusDefinition.profileImageAndEditProfileImageButton)
-        editButton.layer.cornerRadius = CGFloat(CornerRadiusDefinition.editButton)
+        editButton.layer.cornerRadius = CGFloat(CornerRadiusDefinition.editAndSaveButton)
         editButton.layer.borderColor = UIColor.black.cgColor
         editButton.layer.borderWidth = 1
+        CoreDataButton.layer.cornerRadius = CGFloat(CornerRadiusDefinition.editAndSaveButton)
+        CoreDataButton.layer.borderColor = UIColor.black.cgColor
+        CoreDataButton.layer.borderWidth = 1
         GCDButton.layer.cornerRadius = CGFloat(CornerRadiusDefinition.OperationAndGCDButtonCorner)
         GCDButton.layer.borderColor = UIColor.black.cgColor
         GCDButton.layer.borderWidth = 1
@@ -172,11 +179,21 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         OperationButton.layer.borderColor = UIColor.black.cgColor
         OperationButton.layer.borderWidth = 1
         profileImage.layer.cornerRadius = CGFloat(CornerRadiusDefinition.profileImageAndEditProfileImageButton)
+        profileImage.layer.borderColor = UIColor.black.cgColor
+        profileImage.layer.borderWidth = 1
         profileImage.clipsToBounds = true
         topBarProfileView.layer.cornerRadius = CGFloat(CornerRadiusDefinition.topBarProfileView)
         topBarProfileView.layer.borderColor = UIColor.black.cgColor
         topBarProfileView.layer.borderWidth = 1
-        
+    }
+    
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        if profileNameChecker != textField.text {
+            buttonsAvailability(CoreDataButton, availability: true)
+            //FIXME: - Uncomment if you need GCD/Operation saving
+//            buttonsAvailability(GCDButton, availability: true)
+//            buttonsAvailability(OperationButton, availability: true)
+        }
     }
     
     //MARK: - Configured ImagePickers
@@ -210,15 +227,24 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     @IBAction func showEditViewController(_ sender: Any) {
         if editModeIsAvailable {
             displayEditMode()
-            buttonsAvailability(GCDButton, availability: false)
-            buttonsAvailability(OperationButton, availability: false)
+            buttonsAvailability(CoreDataButton, availability: false)
+            //FIXME: - Uncomment if you need GCD/Operation saving
+//            buttonsAvailability(GCDButton, availability: false)
+//            buttonsAvailability(OperationButton, availability: false)
         } else {
             hideEditMode()
             hideKeyBoard()
+            getDataCoreData()
+            //FIXME: - Uncomment if you need GCD/Operation saving
             //FIXME: - To Check Different Saving Methods Uncomment/Comment a line
-            //getDataGCD()
-            getDataOperation()
+//            getDataGCD()
+//            getDataOperation()
         }
+    }
+    
+    @IBAction func saveViaCoreDataButton(_ sender: Any) {
+        hideKeyBoard()
+        CoreDataSaving()
     }
     
     @IBAction func saveViaGCDButton(_ sender: Any) {
@@ -299,6 +325,47 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     
     //MARK: - Functions for Saving Buttons
     
+    private func CoreDataSaving() {
+        buttonsAvailability(CoreDataButton, availability: false)
+        let fetchData = storageManager.readDataAppUser()
+        if fetchData == nil {
+            guard let context = storageManager.coreDataContextToSaveNewData
+                else { return }
+            let newAppUser = AppUser.insertAppUser(into: context)
+            newAppUser?.currentUser?.isOnline = true
+            if profileImage.image != imageChecker {
+                let imageData = profileImage.image?.jpegData(compressionQuality: 0.5)
+                newAppUser?.currentUser?.userImage = imageData
+            }
+            if textFieldProfileName.text == profileNameChecker && textViewProfileDescription.text != profileDescriptionChecker {
+                newAppUser?.currentUser?.userDescription = textViewProfileDescription.text
+            }
+            else if textFieldProfileName.text != profileNameChecker && textViewProfileDescription.text == profileDescriptionChecker {
+                newAppUser?.currentUser?.userName = textFieldProfileName.text
+            }
+            else if textFieldProfileName.text != profileNameChecker && textViewProfileDescription.text != profileDescriptionChecker {
+                newAppUser?.currentUser?.userDescription = textViewProfileDescription.text
+                newAppUser?.currentUser?.userName = textFieldProfileName.text
+            }
+            storageManager.saveDataAppUser(completionIfError: { [unowned self] in self.errorsOccurredAlert() }) { [unowned self] in self.successCompletionHandler() }
+        } else {
+            if profileImage.image != imageChecker {
+                let imageData = profileImage.image?.jpegData(compressionQuality: 0.5)
+                storageManager.updateDataAppUser(isOnline: nil, userName: nil, userDescription: nil, userImage: imageData, completionIfError: { [unowned self] in self.errorsOccurredAlert() })
+                { [unowned self] in self.successCompletionHandler() }
+            }
+            if textFieldProfileName.text == profileNameChecker && textViewProfileDescription.text != profileDescriptionChecker {
+                storageManager.updateDataAppUser(isOnline: nil, userName: nil, userDescription: textViewProfileDescription.text, userImage: nil, completionIfError: { [unowned self] in self.errorsOccurredAlert() }) { [unowned self] in self.successCompletionHandler() }
+            }
+            else if textFieldProfileName.text != profileNameChecker && textViewProfileDescription.text == profileDescriptionChecker {
+                storageManager.updateDataAppUser(isOnline: nil, userName: textFieldProfileName.text, userDescription: nil, userImage: nil, completionIfError: { [unowned self] in self.errorsOccurredAlert() }) { [unowned self] in self.successCompletionHandler() }
+            }
+            else if textFieldProfileName.text != profileNameChecker && textViewProfileDescription.text != profileDescriptionChecker {
+                storageManager.updateDataAppUser(isOnline: nil, userName: textFieldProfileName.text, userDescription: textViewProfileDescription.text, userImage: nil, completionIfError: { [unowned self] in self.errorsOccurredAlert() }) { [unowned self] in self.successCompletionHandler() }
+            }
+        }
+    }
+    
     private func operationSaving() {
         buttonsAvailability(GCDButton, availability: false)
         buttonsAvailability(OperationButton, availability: false)
@@ -346,9 +413,10 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             profileImage.image = image
-            buttonsAvailability(GCDButton, availability: true)
-            buttonsAvailability(OperationButton, availability: true)
-            buttonsAvailability(editButton, availability: true)
+            buttonsAvailability(CoreDataButton, availability: true)
+            //FIXME: - Uncomment if you need GCD/Operation saving
+//            buttonsAvailability(GCDButton, availability: true)
+//            buttonsAvailability(OperationButton, availability: true)
         }
         else {
             errorsOccurredAlert()
@@ -365,7 +433,35 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         self.removeFromParent()
     }
     
-    //MARK: - Get Data Via Certain Type Of Async
+    //MARK: - Get Data Via Certain Type Of Async or CoreData
+    
+    private func getDataCoreData() {
+        let fetchAppUser = storageManager.readDataAppUser()
+        if let fetchedImage = fetchAppUser?.currentUser?.userImage {
+            if let image = UIImage(data: fetchedImage) {
+                self.profileImage.image = image
+                self.imageChecker = image
+            }
+        }
+        if let name = fetchAppUser?.currentUser?.userName {
+            self.profileName.text = name
+            self.profileNameChecker = name
+            self.textFieldProfileName.text = name
+        } else {
+            self.textFieldProfileName.text = self.profileName.text
+            self.profileNameChecker = self.profileName.text ?? ""
+        }
+        if let description = fetchAppUser?.currentUser?.userDescription {
+            self.profileDescription.text = description
+            self.profileDescriptionChecker = description
+            self.textViewProfileDescription.text = description
+            self.textViewCharacterCounter.text = "\(self.textLimit - self.textViewProfileDescription.text.count)"
+        } else {
+            self.textViewProfileDescription.text = self.profileDescription.text
+            self.profileDescriptionChecker = self.profileDescription.text ?? ""
+            self.textViewCharacterCounter.text = "\(self.textLimit - self.textViewProfileDescription.text.count)"
+        }
+    }
     
     private func getDataGCD() {
         saveDataHandler = GCDDataManager()
@@ -459,11 +555,15 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         topBarTitle.text = "Edit"
         editButton.setTitle("Отмена", for: .normal)
         editButton.setTitleColor(UIColor.red, for: .normal)
-        stackViewWithSavingButtons.isHidden = false
+        CoreDataButton.isHidden = false
+        //FIXME: - Uncomment if you need GCD/Operation saving
+//        stackViewWithSavingButtons.isHidden = false
         UIView.animate(withDuration: 0.5) {
             self.profileName.alpha = 0
             self.profileDescription.alpha = 0
-            self.stackViewWithSavingButtons.alpha = 1
+            self.CoreDataButton.alpha = 1
+            //FIXME: - Uncomment if you need GCD/Operation saving
+//            self.stackViewWithSavingButtons.alpha = 1
             self.editProfileImageButton.alpha = 1
             self.textFieldProfileName.alpha = 1
             self.textViewProfileDescription.alpha = 1
@@ -480,12 +580,16 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
             self.textViewCharacterCounter.alpha = 0
             self.profileName.alpha = 1
             self.profileDescription.alpha = 1
-            self.stackViewWithSavingButtons.alpha = 0
+            self.CoreDataButton.alpha = 0
+            //FIXME: - Uncomment if you need GCD/Operation saving
+//            self.stackViewWithSavingButtons.alpha = 0
         }
         topBarTitle.text = "Profile"
         editButton.setTitle("Редактировать", for: .normal)
         editButton.setTitleColor(UIColor.black, for: .normal)
-        stackViewWithSavingButtons.isHidden = true
+        CoreDataButton.isHidden = true
+        //FIXME: - Uncomment if you need GCD/Operation saving
+//        stackViewWithSavingButtons.isHidden = true
         profileName.isHidden = false
         profileDescription.isHidden = false
         textFieldProfileName.isHidden = true
@@ -498,9 +602,10 @@ extension ProfileViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         textViewCharacterCounter.text = "\(textLimit - textView.text.count)"
         if profileDescriptionChecker != textViewProfileDescription.text {
-            buttonsAvailability(GCDButton, availability: true)
-            buttonsAvailability(OperationButton, availability: true)
-            buttonsAvailability(editButton, availability: true)
+            buttonsAvailability(CoreDataButton, availability: true)
+            //FIXME: - Uncomment if you need GCD/Operation saving
+//            buttonsAvailability(GCDButton, availability: true)
+//            buttonsAvailability(OperationButton, availability: true)
         }
     }
     

@@ -91,7 +91,7 @@ class ConversationViewController: UIViewController, CommunicationManagerDelegate
             user?.lastMessage = "(ME) \(newMessage.text!)"
             user?.hasUnreadMessages = false
             user?.date = Date()
-            guard let toUser = user?.name
+            guard let toUser = user?.id
                 else { return }
             sendNewMessage(text: userMessage.text, fromUser: userDevice, toUser: toUser)
             userMessage.text = nil
@@ -134,7 +134,7 @@ class ConversationViewController: UIViewController, CommunicationManagerDelegate
     
     func receiveNewMessage(text: String, fromUser: String, toUser: String) {
         let newMessage = Message(text: text, isIncoming: true)
-        guard let profileName = user?.name
+        guard let profileName = user?.id
             else { return }
         if fromUser == profileName {
             messages.insert(newMessage, at: 0)

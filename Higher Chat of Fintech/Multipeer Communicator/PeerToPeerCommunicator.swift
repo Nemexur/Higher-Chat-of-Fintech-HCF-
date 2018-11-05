@@ -28,7 +28,7 @@ class MultipeerCommunicator: NSObject, Communicator, MCSessionDelegate, MCNearby
     override init() {
         super.init()
         self.online = true
-        peerID = MCPeerID(displayName: userName)
+        peerID = MCPeerID(displayName: UIDevice.current.name + userName)
         advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: ["userName": userName], serviceType: "tinkoff-chat")
         browser = MCNearbyServiceBrowser(peer: peerID, serviceType: "tinkoff-chat")
         advertiser.delegate = self

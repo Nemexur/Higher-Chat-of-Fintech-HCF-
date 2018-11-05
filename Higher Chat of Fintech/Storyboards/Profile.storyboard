@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BXH-6A-eTW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BXH-6A-eTW">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -377,11 +377,22 @@
                                         <rect key="frame" x="0.0" y="0.0" width="288" height="36"/>
                                         <color key="backgroundColor" red="1" green="0.61076081940000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <state key="normal" title="Редактировать">
+                                        <state key="normal" title="Edit">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
                                             <action selector="showEditViewController:" destination="JPr-gE-KPF" eventType="touchUpInside" id="33i-s5-Pf2"/>
+                                        </connections>
+                                    </button>
+                                    <button hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Tq-n7-T6E">
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="0.0"/>
+                                        <color key="backgroundColor" red="1" green="0.61076081940000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="Save">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="saveViaCoreDataButton:" destination="JPr-gE-KPF" eventType="touchUpInside" id="XVg-Am-nw5"/>
                                         </connections>
                                     </button>
                                     <stackView hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="5dg-wi-tON">
@@ -440,6 +451,7 @@
                         <viewLayoutGuide key="safeArea" id="zFn-CP-hE5"/>
                     </view>
                     <connections>
+                        <outlet property="CoreDataButton" destination="6Tq-n7-T6E" id="PyC-kt-gxl"/>
                         <outlet property="GCDButton" destination="pBm-Tc-gSP" id="tuM-cv-X6K"/>
                         <outlet property="OperationButton" destination="448-iX-rLz" id="Diz-w5-870"/>
                         <outlet property="bottomConstraintOfStackViewWithSavingButtons" destination="cdh-O3-rYC" id="vs4-H6-Vlw"/>
