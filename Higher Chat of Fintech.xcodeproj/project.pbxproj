@@ -35,7 +35,6 @@
 		268EBEE62178F0CD006DD494 /* SavingDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268EBEE52178F0CD006DD494 /* SavingDataProtocol.swift */; };
 		26A28BD3217CD18900C2824B /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A28BD2217CD18900C2824B /* StringExtension.swift */; };
 		26BAE5A7215D183000B3FA71 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26BAE5A6215D183000B3FA71 /* Profile.storyboard */; };
-		26BFBC042194688900DBB738 /* MappingModel.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 26BFBC032194688900DBB738 /* MappingModel.xcmappingmodel */; };
 		26C4B94D2155657000B3622B /* LoggingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C4B94C2155657000B3622B /* LoggingHelper.swift */; };
 		26F51F5921554ECA002D5EB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F51F5821554ECA002D5EB4 /* AppDelegate.swift */; };
 		26F51F5B21554ECA002D5EB4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F51F5A21554ECA002D5EB4 /* ViewController.swift */; };
@@ -79,7 +78,6 @@
 		26A28BD2217CD18900C2824B /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		26BAE5A6215D183000B3FA71 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		26BFBC022194675000DBB738 /* ModelForCoreData v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ModelForCoreData v2.xcdatamodel"; sourceTree = "<group>"; };
-		26BFBC032194688900DBB738 /* MappingModel.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = MappingModel.xcmappingmodel; sourceTree = "<group>"; };
 		26C4B94C2155657000B3622B /* LoggingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingHelper.swift; sourceTree = "<group>"; };
 		26F51F5521554ECA002D5EB4 /* Higher Chat of Fintech.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Higher Chat of Fintech.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		26F51F5821554ECA002D5EB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -108,7 +106,6 @@
 			isa = PBXGroup;
 			children = (
 				2604D924218AFFDC00787678 /* ModelForCoreData.xcdatamodeld */,
-				26BFBC032194688900DBB738 /* MappingModel.xcmappingmodel */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -439,7 +436,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26BFBC042194688900DBB738 /* MappingModel.xcmappingmodel in Sources */,
 				2604D92A218B152400787678 /* AppUser.swift in Sources */,
 				265114C82170B52400938317 /* ThemesPickerViewControllerSwift.swift in Sources */,
 				266A353B2166289500028668 /* ConversationCellConfiguration.swift in Sources */,
