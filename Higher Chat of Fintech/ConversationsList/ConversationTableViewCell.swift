@@ -8,10 +8,10 @@
 
 import UIKit
 
-//MARK: - Values for DateFormatting
+// MARK: - Values for DateFormatting
 
-fileprivate enum DateFormatting {
-    
+private enum DateFormatting {
+
     static let dateFormatType = "dd-MM-yyyy HH:mm"
     static let formattedDateSeparator: Character = " "
 }
@@ -22,14 +22,13 @@ class ConversationTableViewCell: UITableViewCell, ConversationCellConfiguration 
     @IBOutlet weak var conversationProfileImage: UIImageView!
     @IBOutlet weak var messagePreview: UILabel!
     @IBOutlet weak var timeOfTheMessage: UILabel!
-    
-    
+
     var name: String? {
         didSet {
             self.namelabel.text = name
         }
     }
-    
+
     var message: String? {
         didSet {
             if message == nil {
@@ -41,10 +40,10 @@ class ConversationTableViewCell: UITableViewCell, ConversationCellConfiguration 
             }
         }
     }
-    
+
     var date: Date? {
         didSet {
-            
+
             if date != nil {
                 //Parsing date and getting current date
                 let dateFormatter = DateFormatter()
@@ -56,7 +55,7 @@ class ConversationTableViewCell: UITableViewCell, ConversationCellConfiguration 
                 let day = calendar.component(.day, from: currentDate)
                 let month = calendar.component(.month, from: currentDate)
                 let year = calendar.component(.year, from: currentDate)
-                
+
                 //Set date
                 if splittedDate[0] == "\(String(format: "%02d", day))-\(String(format: "%02d", month))-\(year)" {
                     self.timeOfTheMessage.text = String(formattedDate.split(separator: " ")[1])
@@ -67,10 +66,10 @@ class ConversationTableViewCell: UITableViewCell, ConversationCellConfiguration 
             } else {
                 self.timeOfTheMessage.text = ""
             }
-            
+
         }
     }
-    
+
     var online: Bool? {
         didSet {
             if online == true {
@@ -80,7 +79,7 @@ class ConversationTableViewCell: UITableViewCell, ConversationCellConfiguration 
             }
         }
     }
-    
+
     var hasUnreadMessages: Bool? {
         didSet {
             if hasUnreadMessages == true {
@@ -92,8 +91,7 @@ class ConversationTableViewCell: UITableViewCell, ConversationCellConfiguration 
             }
         }
     }
-    
-    
+
 //    override func prepareForReuse() {
 //        super.prepareForReuse()
 //

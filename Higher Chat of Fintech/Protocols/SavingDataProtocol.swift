@@ -10,10 +10,10 @@ import Foundation
 import UIKit
 
 protocol SavingDataProtocol {
-    var errorFunction: (() -> ())? { get set }
-    var completion: (() -> ())? { get set }
-    var buttonsAndIndicatorAppearance: (() -> ())? { get set }
-    
+    var errorFunction: (() -> Void)? { get set }
+    var completion: (() -> Void)? { get set }
+    var buttonsAndIndicatorAppearance: (() -> Void)? { get set }
+
     func saveData()
     func getUserDataFromFileManager() -> (profileNameText: String?, profileDescriptionText: String?, profileImage: UIImage?)
 }

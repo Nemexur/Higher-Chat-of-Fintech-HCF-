@@ -392,7 +392,7 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="saveViaCoreDataButton:" destination="JPr-gE-KPF" eventType="touchUpInside" id="XVg-Am-nw5"/>
+                                            <action selector="saveViacoreDataButton:" destination="JPr-gE-KPF" eventType="touchUpInside" id="XVg-Am-nw5"/>
                                         </connections>
                                     </button>
                                     <stackView hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="5dg-wi-tON">
@@ -451,12 +451,12 @@
                         <viewLayoutGuide key="safeArea" id="zFn-CP-hE5"/>
                     </view>
                     <connections>
-                        <outlet property="CoreDataButton" destination="6Tq-n7-T6E" id="PyC-kt-gxl"/>
                         <outlet property="GCDButton" destination="pBm-Tc-gSP" id="tuM-cv-X6K"/>
-                        <outlet property="OperationButton" destination="448-iX-rLz" id="Diz-w5-870"/>
-                        <outlet property="bottomConstraintOfStackViewWithSavingButtons" destination="cdh-O3-rYC" id="vs4-H6-Vlw"/>
+                        <outlet property="bottomConstraintSavingButtons" destination="cdh-O3-rYC" id="vs4-H6-Vlw"/>
+                        <outlet property="coreDataButton" destination="6Tq-n7-T6E" id="PyC-kt-gxl"/>
                         <outlet property="editButton" destination="fh3-PQ-grO" id="oed-cJ-pzG"/>
                         <outlet property="editProfileImageButton" destination="xO0-NB-jQA" id="7BS-QP-9bl"/>
+                        <outlet property="operationButton" destination="448-iX-rLz" id="Diz-w5-870"/>
                         <outlet property="profileDescription" destination="OBj-ki-MS4" id="LdT-rV-IBY"/>
                         <outlet property="profileImage" destination="UXZ-Ti-2Pe" id="b9w-M4-RNl"/>
                         <outlet property="profileName" destination="xOp-7q-bZQ" id="UIT-Rn-JlX"/>
@@ -571,7 +571,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3VC-TV-zwb">
-                                <rect key="frame" x="16" y="36" width="288" height="44"/>
+                                <rect key="frame" x="16" y="36" width="568" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3wW-7E-Bw3">
                                         <rect key="frame" x="16" y="8" width="30" height="30"/>
@@ -584,7 +584,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Theme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xn6-4N-nfY">
-                                        <rect key="frame" x="116" y="12" width="56.5" height="20.5"/>
+                                        <rect key="frame" x="256" y="12" width="56.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -601,7 +601,7 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="38" translatesAutoresizingMaskIntoConstraints="NO" id="m3M-6E-K2q">
-                                <rect key="frame" x="129.5" y="180" width="61" height="234"/>
+                                <rect key="frame" x="269.5" y="180" width="61" height="234"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gSC-uM-yU5">
                                         <rect key="frame" x="0.0" y="0.0" width="61" height="30"/>

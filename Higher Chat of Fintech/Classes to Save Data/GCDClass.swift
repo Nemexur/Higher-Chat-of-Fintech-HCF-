@@ -10,21 +10,21 @@ import Foundation
 import UIKit
 
 class GCDDataManager: SavingDataProtocol {
-    var imageToSave: UIImage? = UIImage()
-    var checkImage: UIImage = UIImage()
-    var profileName: String? = String()
-    var profileDescription: String? = String()
-    var profileNameChecker: String = String()
-    var profileDescriptionChecker: String = String()
-    var errorFunction: (() -> ())?
-    var completion: (() -> ())?
-    var buttonsAndIndicatorAppearance: (() -> ())?
-    
-    var imageToDeliver: UIImage?
-    var profileNameToDeliver: String?
-    var profileDescriptionToDeliver: String?
-    
-    init(imageToSave: UIImage?, checkImage: UIImage, profileName: String?, profileDescription: String?, profileNameChecker: String, profileDescriptionChecker: String, errorFunction: @escaping() -> (), completion: @escaping () -> (), buttonsAndIndicatorAppearance: @escaping () -> ()) {
+    private var imageToSave: UIImage? = UIImage()
+    private var checkImage: UIImage = UIImage()
+    private var profileName: String? = String()
+    private var profileDescription: String? = String()
+    private var profileNameChecker: String = String()
+    private var profileDescriptionChecker: String = String()
+    var errorFunction: (() -> Void)?
+    var completion: (() -> Void)?
+    var buttonsAndIndicatorAppearance: (() -> Void)?
+
+    private var imageToDeliver: UIImage?
+    private var profileNameToDeliver: String?
+    private var profileDescriptionToDeliver: String?
+
+    init(imageToSave: UIImage?, checkImage: UIImage, profileName: String?, profileDescription: String?, profileNameChecker: String, profileDescriptionChecker: String, errorFunction: @escaping() -> Void, completion: @escaping () -> Void, buttonsAndIndicatorAppearance: @escaping () -> Void) {
         self.imageToSave = imageToSave
         self.checkImage = checkImage
         self.profileName = profileName
@@ -35,9 +35,9 @@ class GCDDataManager: SavingDataProtocol {
         self.completion = completion
         self.buttonsAndIndicatorAppearance = buttonsAndIndicatorAppearance
     }
-    
+
     init() { }
-    
+
     func saveData() {
         let queue = DispatchQueue.global(qos: .background)
         let workItem = DispatchWorkItem {
@@ -53,9 +53,9 @@ class GCDDataManager: SavingDataProtocol {
             buttonsAndIndicatorAlpha()
         }
     }
-    
-    //MARK: - Saving Data
-    
+
+    // MARK: - Saving Data
+
     private func saveImageViaFileManager() {
         if imageToSave == checkImage {
             return
@@ -76,24 +76,22 @@ class GCDDataManager: SavingDataProtocol {
             }
         }
     }
-    
+
     private func saveNewProfileInformation() {
         let defaults = UserDefaults.standard
         if profileName == profileNameChecker && profileDescription != profileDescriptionChecker {
             defaults.set(profileDescription, forKey: "ProfileDescription")
-        }
-        else if profileName != profileNameChecker && profileDescription == profileDescriptionChecker {
+        } else if profileName != profileNameChecker && profileDescription == profileDescriptionChecker {
             defaults.set(profileName, forKey: "ProfileName")
-        }
-        else if profileName != profileNameChecker && profileDescription != profileDescriptionChecker {
+        } else if profileName != profileNameChecker && profileDescription != profileDescriptionChecker {
             defaults.set(profileName, forKey: "ProfileName")
             defaults.set(profileDescription, forKey: "ProfileDescription")
         }
     }
-    
-    //MARK: - Work With FileManager
-    
-    func getUserDataFromFileManager() -> (profileNameText: String?, profileDescriptionText: String?, profileImage: UIImage?){
+
+    // MARK: - Work With FileManager
+
+    func getUserDataFromFileManager() -> (profileNameText: String?, profileDescriptionText: String?, profileImage: UIImage?) {
         let defaults = UserDefaults.standard
         let semaphore = DispatchSemaphore(value: 0)
         let queue = DispatchQueue.global(qos: .userInteractive)
@@ -115,18 +113,18 @@ class GCDDataManager: SavingDataProtocol {
         _ = semaphore.wait(timeout: .distantFuture)
         return (profileNameToDeliver, profileDescriptionToDeliver, imageToDeliver)
     }
-    
-    //MARK: - Getting Image
-    
+
+    // MARK: - Getting Image
+
     private func getImage() -> UIImage? {
         //Document Directory
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let documentsDirectory = paths[0]
-        
+
         //Get Certain Data From Document Directory
         let fileManager = FileManager.default
         let imagePath = (documentsDirectory as NSString).appendingPathComponent("profileImage.jpg")
-        if fileManager.fileExists(atPath: imagePath){
+        if fileManager.fileExists(atPath: imagePath) {
             return UIImage(contentsOfFile: imagePath)
         } else {
             DispatchQueue.main.async {

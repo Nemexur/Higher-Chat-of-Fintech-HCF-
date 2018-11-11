@@ -10,7 +10,7 @@
 
 @implementation Themes { }
 
-//MARK: - Setters
+// MARK: - Setters
 
 -(void) setThemes: (UIColor *)newDefaultTheme setTheme1:(UIColor *)newTheme1 setTheme2:(UIColor *)newTheme2 setTheme3:(UIColor *)newTheme3 {
     
@@ -37,7 +37,7 @@
     }
 }
 
-//MARK: - Getters
+// MARK: - Getters
 
 - (UIColor *) theme1 {
     return _theme1;

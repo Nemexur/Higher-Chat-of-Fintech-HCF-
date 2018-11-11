@@ -17,4 +17,13 @@ extension User {
             return nil
         }
     }
+
+    static func fetchRequestUser(model: NSManagedObjectModel) -> NSFetchRequest<User>? {
+        let templateName = "fetchUser"
+        guard let fetchRequest = model.fetchRequestTemplate(forName: templateName) as? NSFetchRequest<User>
+            else {
+                print("Error with Template: \(templateName)")
+                return nil }
+        return fetchRequest
+    }
 }

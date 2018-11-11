@@ -17,7 +17,7 @@
 
 @implementation ThemesViewController
 
-//MARK: - Overrided UIViewController Functions
+// MARK: - Overrided UIViewController Functions
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,7 +34,7 @@
              setTheme3: [_colorsForThemes objectForKey: @"Theme3"]];
 }
 
-//MARK: - Deallocation Function
+// MARK: - Deallocation Function
 
 - (void)dealloc {
     [_topBarThemeView release];
@@ -43,7 +43,7 @@
     [super dealloc];
 }
 
-//MARK: - Additional Functions
+// MARK: - Additional Functions
 
 - (void) configureTopBarThemeView {
     _topBarThemeView.layer.cornerRadius = 10;
@@ -64,7 +64,7 @@
     [_delegate themesViewController:self didSelectTheme:theme];
 }
 
-//MARK: - Button Actions
+// MARK: - Button Actions
 
 - (IBAction)pickTheme1:(id)sender {
     [self setDelegateTheme:[_themes theme1]];
