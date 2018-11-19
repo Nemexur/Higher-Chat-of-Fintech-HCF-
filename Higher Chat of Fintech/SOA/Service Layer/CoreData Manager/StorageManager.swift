@@ -66,12 +66,8 @@ class StorageManager: IStorageManager {
             else {
                 print("Error with ManagedObjectContext in StorageManager")
                 return nil }
-//        guard let model = coreDataModel
-//            else {
-//                print("Error with ManagedObjectModel in StorageManager")
-//                return nil }
         let request: NSFetchRequest<Conversation> = Conversation.fetchRequest()
-        //let request: NSFetchRequest<Conversation> = Conversation.fetchRequestConversation(model: model)
+//        return getFetchRequestData(Conversation.self, dataManager: self)
         do {
             let results = try context.fetch(request)
             return results
@@ -165,13 +161,10 @@ class StorageManager: IStorageManager {
             else {
                 print("Error with ManagedObjectContext in StorageManager")
                 return nil }
-//        guard let model = coreDataModel
-//            else {
-//                print("Error with ManagedObjectModel in StorageManager")
-//                return nil }
         let request: NSFetchRequest<Conversation> = Conversation.fetchRequest()
-        //let request: NSFetchRequest<Conversation> = Conversation.fetchRequestConversation(model: model)
-        request.predicate = NSPredicate(format: "conversationID = %@", conversationId)
+        let fetchPredicate = NSPredicate(format: "conversationID = %@", conversationId)
+//        return getFetchRequestData(Conversation.self, dataManager: self, predicate: fetchPredicate)
+        request.predicate = fetchPredicate
         do {
             let results = try context.fetch(request)
             return results
@@ -186,13 +179,10 @@ class StorageManager: IStorageManager {
             else {
                 print("Error with ManagedObjectContext in StorageManager")
                 return nil }
-//        guard let model = coreDataModel
-//            else {
-//                print("Error with ManagedObjectModel in StorageManager")
-//                return nil }
         let request: NSFetchRequest<Conversation> = Conversation.fetchRequest()
-        //let request: NSFetchRequest<Conversation> = Conversation.fetchRequestConversation(model: model)
-        request.predicate = NSPredicate(format: "withUser.isOnline = %@", "true")
+        let fetchPredicate = NSPredicate(format: "withUser.isOnline = %@", NSNumber(booleanLiteral: true))
+//        return getFetchRequestData(Conversation.self, dataManager: self, predicate: fetchPredicate)
+        request.predicate = fetchPredicate
         do {
             let results = try context.fetch(request)
             return results
@@ -207,13 +197,10 @@ class StorageManager: IStorageManager {
             else {
                 print("Error with ManagedObjectContext in StorageManager")
                 return nil }
-//        guard let model = coreDataModel
-//            else {
-//                print("Error with ManagedObjectModel in StorageManager")
-//                return nil }
         let request: NSFetchRequest<User> = User.fetchRequest()
-        //let request: NSFetchRequest<User> = User.fetchRequestUser(model: model)
-        request.predicate = NSPredicate(format: "isOnline = %@", "\(onlineAttribute)")
+        let fetchPredicate = NSPredicate(format: "isOnline = %@", NSNumber(booleanLiteral: onlineAttribute))
+//        return getFetchRequestData(User.self, dataManager: self, predicate: fetchPredicate)
+        request.predicate = fetchPredicate
         do {
             let results = try context.fetch(request)
             return results
@@ -228,13 +215,10 @@ class StorageManager: IStorageManager {
             else {
                 print("Error with ManagedObjectContext in StorageManager")
                 return nil }
-//        guard let model = coreDataModel
-//            else {
-//                print("Error with ManagedObjectModel in StorageManager")
-//                return nil }
         let request: NSFetchRequest<User> = User.fetchRequest()
-        //let request: NSFetchRequest<User> = User.fetchRequestUser(model: model)
-        request.predicate = NSPredicate(format: "userID = %@", certainID)
+        let fetchPredicate = NSPredicate(format: "userID = %@", certainID)
+//        return getFetchRequestData(User.self, dataManager: self, predicate: fetchPredicate)
+        request.predicate = fetchPredicate
         do {
             let results = try context.fetch(request)
             return results

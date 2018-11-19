@@ -8,3 +8,4 @@ disabled_rules: # rule identifiers to exclude from running
   - multiple_closures_with_trailing_closure
   - weak_delegate
   - cyclomatic_complexity
+  - compiler_protocol_init

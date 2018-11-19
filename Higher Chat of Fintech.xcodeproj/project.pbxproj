@@ -56,6 +56,7 @@
 		26A28BD3217CD18900C2824B /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A28BD2217CD18900C2824B /* StringExtension.swift */; };
 		26BAE5A7215D183000B3FA71 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26BAE5A6215D183000B3FA71 /* Profile.storyboard */; };
 		26C4B94D2155657000B3622B /* LoggingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C4B94C2155657000B3622B /* LoggingHelper.swift */; };
+		26DC5C0921A2E097004A05F7 /* GenericFetchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DC5C0821A2E097004A05F7 /* GenericFetchRequest.swift */; };
 		26F51F5921554ECA002D5EB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F51F5821554ECA002D5EB4 /* AppDelegate.swift */; };
 		26F51F5B21554ECA002D5EB4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F51F5A21554ECA002D5EB4 /* ViewController.swift */; };
 		26F51F5E21554ECA002D5EB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26F51F5C21554ECA002D5EB4 /* Main.storyboard */; };
@@ -117,6 +118,7 @@
 		26BAE5A6215D183000B3FA71 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		26BFBC022194675000DBB738 /* ModelForCoreData v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ModelForCoreData v2.xcdatamodel"; sourceTree = "<group>"; };
 		26C4B94C2155657000B3622B /* LoggingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingHelper.swift; sourceTree = "<group>"; };
+		26DC5C0821A2E097004A05F7 /* GenericFetchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericFetchRequest.swift; sourceTree = "<group>"; };
 		26F51F5521554ECA002D5EB4 /* Higher Chat of Fintech.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Higher Chat of Fintech.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		26F51F5821554ECA002D5EB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		26F51F5A21554ECA002D5EB4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -605,10 +607,19 @@
 		26C4B94B2155654900B3622B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				26DC5C0721A2E07B004A05F7 /* For Fetching */,
 				2657FB0421A1786400C629D9 /* For Logging */,
 				2657FB0521A1786C00C629D9 /* For GeneratingID */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		26DC5C0721A2E07B004A05F7 /* For Fetching */ = {
+			isa = PBXGroup;
+			children = (
+				26DC5C0821A2E097004A05F7 /* GenericFetchRequest.swift */,
+			);
+			path = "For Fetching";
 			sourceTree = "<group>";
 		};
 		26ECFD26218A42220026881A /* CoreData */ = {
@@ -790,6 +801,7 @@
 				2685427021A227B10095F9A6 /* ICoreDataStack.swift in Sources */,
 				26F51F5B21554ECA002D5EB4 /* ViewController.swift in Sources */,
 				266A35322165EE1400028668 /* ConversationsListViewController.swift in Sources */,
+				26DC5C0921A2E097004A05F7 /* GenericFetchRequest.swift in Sources */,
 				266A35342165F34600028668 /* ConversationTableViewCell.swift in Sources */,
 				2634B4AA21A071A5002D61E6 /* CoreAssembly.swift in Sources */,
 				2604D92C218B177F00787678 /* User.swift in Sources */,
