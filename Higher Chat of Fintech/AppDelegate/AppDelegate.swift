@@ -16,11 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var state: String = "Not running"
 
     private let profileStoryBoard = UIStoryboard(name: "Profile", bundle: nil)
+    private let rootAssembly = RootAssembly()
+    private var _rootViewController: ConversationsListViewController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
         if let rootViewController = profileStoryBoard.instantiateViewController(withIdentifier: "ConversationVC") as? ConversationsListViewController {
+            _rootViewController = rootViewController
+            rootViewController.conversationsListModel = rootAssembly.presentationAssembly.setupConversationsListModel()
             self.window?.rootViewController = UINavigationController(rootViewController: rootViewController)
             self.window?.makeKeyAndVisible()
         } else {
@@ -42,12 +46,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        rootAssembly.coreAssembly.multipeerCommunicator.advertiser!.stopAdvertisingPeer()
+        rootAssembly.coreAssembly.multipeerCommunicator.browser!.stopBrowsingForPeers()
+        _rootViewController?.setOffline()
         logIfEnabled("Application moved from 'Foreground: \(state)' to '\(getStateOfApplication(state: UIApplication.shared.applicationState))' \n---\(#function)---")
         state = getStateOfApplication(state: UIApplication.shared.applicationState)
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        rootAssembly.coreAssembly.multipeerCommunicator.advertiser!.startAdvertisingPeer()
+        rootAssembly.coreAssembly.multipeerCommunicator.browser!.startBrowsingForPeers()
         logIfEnabled("Application moved from '\(getStateOfApplication(state: UIApplication.shared.applicationState))' to 'Foreground: Inactive' \n---\(#function)---")
         state = "Inactive"
     }
@@ -60,6 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        _rootViewController = nil
         logIfEnabled("Application moved from '\(getStateOfApplication(state: UIApplication.shared.applicationState))' to 'Not running' \n---\(#function)---")
         state = "Not running"
     }
