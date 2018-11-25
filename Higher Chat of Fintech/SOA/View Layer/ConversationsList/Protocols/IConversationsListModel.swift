@@ -14,6 +14,7 @@ protocol IConversationsListModel: class {
     var storageManager: IStorageManager { get }
     var operationManager: ISavingData { get }
     var communicatorManager: ICommunicationManager { get set }
+    var networkManager: INetworkManager { get }
     var fetchedResultsController: NSFetchedResultsController<Conversation> { get set }
     func fetchConversations() -> [Conversation]?
     func saveNewData()

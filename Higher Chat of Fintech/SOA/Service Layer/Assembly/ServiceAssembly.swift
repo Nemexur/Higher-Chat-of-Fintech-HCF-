@@ -16,4 +16,5 @@ class ServiceAssembly: IServiceAssembly {
     lazy var storageManager: IStorageManager = StorageManager(coreAssembly: self.coreAssembly)
     lazy var savingManager: ISavingData = OperationDataManager()
     lazy var communicationManager: ICommunicationManager = CommunicationManager(coreAssembly: self.coreAssembly)
+    lazy var networkManager: INetworkManager = NetworkManager(coreAssembly: self.coreAssembly)
 }

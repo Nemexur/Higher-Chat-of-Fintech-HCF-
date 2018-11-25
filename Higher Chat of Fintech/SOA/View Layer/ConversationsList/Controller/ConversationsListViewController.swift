@@ -263,52 +263,63 @@ class ConversationsListViewController: UIViewController, ThemesViewControllerDel
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Segues.chatSegueID {
             guard let chatController = segue.destination as? ConversationViewController else { return }
-            guard let conversation = sender as? ConversationsListCellDisplayModel,
-                let storageManager = conversationsListModel?.storageManager,
-                let communicatorManager = conversationsListModel?.communicatorManager
-                else { return }
-            guard let userIndex = userchats.index(where: {$0.conversationID == conversation.identifier}) else { return }
-            let conversationModel: IConversationModel = ConversationModel(storageManager: storageManager, communicatorManager: communicatorManager, conversationID: conversation.identifier ?? "Русалочка Ариэль")
-            chatController.conversationModel = conversationModel
-            chatController.user = userchats[userIndex]
-            chatController.userDevice = conversationsListModel?.communicatorManager.userName
-            chatController.view.backgroundColor = UIColor.white
-            chatController.inputMessageView.backgroundColor = selectedColor
-            chatController.conversationsListViewController = self
+            setupConversationViewControllerElements(chatController, sender: sender)
         }
 
         if segue.identifier == Segues.profileSegueID {
-            guard let userController = segue.destination as? ProfileViewController
-                else { return}
-            guard let storageManager = conversationsListModel?.storageManager,
-                let operationManager = conversationsListModel?.operationManager
-                else { return }
-            let profileModel: IProfileModel = ProfileModel(storageManager: storageManager, operationManager: operationManager)
-            userController.profileModel = profileModel
-            userController.view.backgroundColor = selectedColor
-            userController.textFieldProfileName.backgroundColor = selectedColor
+            guard let userController = segue.destination as? ProfileViewController else { return}
+            setupProfileViewControllerElements(userController)
         }
 
         if segue.identifier == Segues.themesPickerSegueID {
-            guard let themePickerController = segue.destination as? ThemesViewController
-                else { return }
+            guard let themePickerController = segue.destination as? ThemesViewController else { return }
             hideChooseThemePickerView(chooseThemePickerView)
-            themePickerController.delegate = self
-            themePickerController.view.backgroundColor = selectedColor
+            setupThemesPickerObjCViewControllerElements(themePickerController)
         }
 
         if segue.identifier == Segues.themesPickerSwiftSegueID {
-            guard let themesPickerSwiftController = segue.destination as? ThemesPickerViewControllerSwift
-                else { return }
+            guard let themesPickerSwiftController = segue.destination as? ThemesPickerViewControllerSwift else { return }
             hideChooseThemePickerView(chooseThemePickerView)
-            let themesPickerModel: IThemePickerModel = ThemePickerModel()
-            themesPickerSwiftController.themesPickerModel = themesPickerModel
-            themesPickerSwiftController.onThemesViewControllerDelegate = {
-                [unowned self] didSelectTheme in
-                self.logThemeChanging(selectedTheme: didSelectTheme)
-            }
-            themesPickerSwiftController.view.backgroundColor = selectedColor
+            setupThemesPickerSwiftViewControllerElements(themesPickerSwiftController)
         }
+    }
+    // MARK: - Setup ViewControllers for Segues
+    private func setupConversationViewControllerElements(_ chatController: ConversationViewController, sender: Any?) {
+        guard let conversation = sender as? ConversationsListCellDisplayModel,
+            let storageManager = conversationsListModel?.storageManager,
+            let communicatorManager = conversationsListModel?.communicatorManager
+            else { return }
+        guard let userIndex = userchats.index(where: {$0.conversationID == conversation.identifier}) else { return }
+        let conversationModel: IConversationModel = ConversationModel(storageManager: storageManager, communicatorManager: communicatorManager, conversationID: conversation.identifier ?? "Русалочка Ариэль")
+        chatController.conversationModel = conversationModel
+        chatController.user = userchats[userIndex]
+        chatController.userDevice = conversationsListModel?.communicatorManager.userName
+        chatController.view.backgroundColor = UIColor.white
+        chatController.inputMessageView.backgroundColor = selectedColor
+        chatController.conversationsListViewController = self
+    }
+    private func setupProfileViewControllerElements(_ userController: ProfileViewController) {
+        guard let storageManager = conversationsListModel?.storageManager,
+            let operationManager = conversationsListModel?.operationManager,
+            let networkManager = conversationsListModel?.networkManager
+            else { return }
+        let profileModel: IProfileModel = ProfileModel(storageManager: storageManager, operationManager: operationManager, networkManager: networkManager)
+        userController.profileModel = profileModel
+        userController.view.backgroundColor = selectedColor
+        userController.textFieldProfileName.backgroundColor = selectedColor
+    }
+    private func setupThemesPickerSwiftViewControllerElements(_ themesPickerSwiftController: ThemesPickerViewControllerSwift) {
+        let themesPickerModel: IThemePickerModel = ThemePickerModel()
+        themesPickerSwiftController.themesPickerModel = themesPickerModel
+        themesPickerSwiftController.onThemesViewControllerDelegate = {
+            [unowned self] didSelectTheme in
+            self.logThemeChanging(selectedTheme: didSelectTheme)
+        }
+        themesPickerSwiftController.view.backgroundColor = selectedColor
+    }
+    private func setupThemesPickerObjCViewControllerElements(_ themePickerController: ThemesViewController) {
+        themePickerController.delegate = self
+        themePickerController.view.backgroundColor = selectedColor
     }
 
     // MARK: - Allocate Users Functions
@@ -342,6 +353,8 @@ extension ConversationsListViewController: UITableViewDataSource {
         configure(cell, at: indexPath)
 
         guard let cellToReturn = cell as? ConversationTableViewCell else { return ConversationTableViewCell() }
+        cellToReturn.conversationProfileImage.layer.cornerRadius = 24
+        cellToReturn.conversationProfileImage.clipsToBounds = true
         return cellToReturn
 
     }

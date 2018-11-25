@@ -31,11 +31,13 @@ class ConversationsListModel: IConversationsListModel, CommunicationManagerDeleg
     var storageManager: IStorageManager
     var operationManager: ISavingData
     var communicatorManager: ICommunicationManager
+    var networkManager: INetworkManager
     var fetchedResultsController: NSFetchedResultsController<Conversation> = NSFetchedResultsController()
-    init(storageManager: IStorageManager, communicatorManager: ICommunicationManager, operationManager: ISavingData) {
+    init(storageManager: IStorageManager, communicatorManager: ICommunicationManager, operationManager: ISavingData, networkManager: INetworkManager) {
         self.storageManager = storageManager
         self.communicatorManager = communicatorManager
         self.operationManager = operationManager
+        self.networkManager = networkManager
         guard let context = self.storageManager.coreDataMainContext else { return }
         let fetchRequest: NSFetchRequest<Conversation> = Conversation.fetchRequest()
         let sortDescriptorOnline = NSSortDescriptor(key: "isOnline", ascending: true)

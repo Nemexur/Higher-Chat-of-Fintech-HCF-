@@ -8,7 +8,10 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, ProfileModelDelegate {
+// MARK: - Identifiers
+private let imagesPickerSegueID = "ShowImagesPicker"
+
+class ProfileViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, ProfileModelDelegate, SelectedImageDelegate {
     // MARK: - IBOutlets
 
     @IBOutlet weak var editButton: UIButton!
@@ -88,7 +91,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         setupNotifications()
         setupViewElements()
         appUser = profileModel?.fetchAppUserData()
-        //FIXME: - Uncomment if you need GCD/Operation saving
+        //FIXME: - Uncomment if you need Operation saving
         //FIXME: - To Check Different Data Methods Uncomment/Comment a line
 //        profileModel?.fetchUserDataViaOperation()
         setupGestures()
@@ -130,6 +133,12 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     }
     func show(error message: String) {
         print("Error: \(message)")
+    }
+    func didPickImage(image: UIImage?) {
+        profileImage.image = image
+        buttonsAvailability(coreDataButton, availability: true)
+        //FIXME: - Uncomment if you need Operation saving
+//        buttonsAvailability(operationButton, availability: true)
     }
     // MARK: - Additional Functions
 
@@ -218,7 +227,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     @objc private func textFieldDidChange(_ textField: UITextField) {
         if profileNameChecker != textField.text {
             buttonsAvailability(coreDataButton, availability: true)
-            //FIXME: - Uncomment if you need GCD/Operation saving
+            //FIXME: - Uncomment if you need Operation saving
 //            buttonsAvailability(operationButton, availability: true)
         }
     }
@@ -255,13 +264,16 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         if editModeIsAvailable {
             displayEditMode()
             buttonsAvailability(coreDataButton, availability: false)
-            //FIXME: - Uncomment if you need GCD/Operation saving
+            //FIXME: - Uncomment if you need Operation saving
 //            buttonsAvailability(operationButton, availability: false)
         } else {
             hideEditMode()
             hideKeyBoard()
             appUser = profileModel?.fetchAppUserData()
-            //FIXME: - Uncomment if you need GCD/Operation saving
+            if appUser?.currentUser?.userImage == nil {
+                profileImage.image = #imageLiteral(resourceName: "ProfileImage")
+            }
+            //FIXME: - Uncomment if you need Operation saving
             //FIXME: - To Check Different Saving Methods Uncomment/Comment a line
 //            profileModel?.fetchUserDataViaOperation()
         }
@@ -275,6 +287,24 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     @IBAction func saveViaOperaionButton(_ sender: Any) {
         hideKeyBoard()
         operationSaving()
+    }
+    // MARK: - Unwind Segues to this ViewController
+    @IBAction func unwindToProfileFromImages (_ sender: UIStoryboardSegue) { }
+    // MARK: - Prepare For Segues
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == imagesPickerSegueID {
+            guard let imagesController = segue.destination as? ImagesViewController else { return }
+            setupImagesViewControllerElements(imagesController)
+        }
+    }
+    // MARK: - Setup ViewControllers for Segues
+    private func setupImagesViewControllerElements(_ imagesController: ImagesViewController) {
+        guard let networkManger = profileModel?.networkManager else { return }
+        let imagesModel: IImagesModel = ImagesModel(networkManager: networkManger)
+        imagesController.imagesModel = imagesModel
+        imagesController.view.backgroundColor = self.view.backgroundColor
+        imagesController.imagesCollectionView.backgroundColor = self.view.backgroundColor
+        imagesController.delegate = self
     }
 
     // MARK: - Alerts
@@ -299,6 +329,11 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
 
         }
         alert.addAction(cameraAction)
+        //Load Images Action
+        let loadImagesAction = UIAlertAction(title: "Load", style: .default) { [unowned self] (_) in
+            self.performSegue(withIdentifier: imagesPickerSegueID, sender: nil)
+        }
+        alert.addAction(loadImagesAction)
 
         //Cancel Action
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -389,7 +424,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             profileImage.image = image
             buttonsAvailability(coreDataButton, availability: true)
-            //FIXME: - Uncomment if you need GCD/Operation saving
+            //FIXME: - Uncomment if you need Operation saving
 //            buttonsAvailability(operationButton, availability: true)
         } else {
             errorsOccurredAlert()
@@ -402,11 +437,11 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     }
 
     deinit {
-        print("----- ProfileViewController has been deinitiolized -----")
+        print("----- ProfileViewController has been deinitialized -----")
         self.removeFromParent()
     }
 
-    // MARK: - Additional Functions
+    // MARK: - Functions to Hide/Display Edit Mode
 
     private func displayEditMode() {
         editModeIsAvailable.toggle()
@@ -417,16 +452,16 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         textViewProfileDescription.isHidden = false
         textViewCharacterCounter.isHidden = false
         topBarTitle.text = "Edit"
-        editButton.setTitle("Отмена", for: .normal)
+        editButton.setTitle("Cancel", for: .normal)
         editButton.setTitleColor(UIColor.red, for: .normal)
         coreDataButton.isHidden = false
-        //FIXME: - Uncomment if you need GCD/Operation saving
+        //FIXME: - Uncomment if you need Operation saving
 //        stackViewWithSavingButtons.isHidden = false
         UIView.animate(withDuration: 0.5) {
             self.profileName.alpha = 0
             self.profileDescription.alpha = 0
             self.coreDataButton.alpha = 1
-            //FIXME: - Uncomment if you need GCD/Operation saving
+            //FIXME: - Uncomment if you need Operation saving
 //            self.stackViewWithSavingButtons.alpha = 1
             self.editProfileImageButton.alpha = 1
             self.textFieldProfileName.alpha = 1
@@ -434,7 +469,6 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
             self.textViewCharacterCounter.alpha = 1
         }
     }
-
     private func hideEditMode() {
         editModeIsAvailable.toggle()
         UIView.animate(withDuration: 0.5) {
@@ -445,14 +479,14 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
             self.profileName.alpha = 1
             self.profileDescription.alpha = 1
             self.coreDataButton.alpha = 0
-            //FIXME: - Uncomment if you need GCD/Operation saving
+            //FIXME: - Uncomment if you need Operation saving
 //            self.stackViewWithSavingButtons.alpha = 0
         }
         topBarTitle.text = "Profile"
-        editButton.setTitle("Редактировать", for: .normal)
+        editButton.setTitle("Edit", for: .normal)
         editButton.setTitleColor(UIColor.black, for: .normal)
         coreDataButton.isHidden = true
-        //FIXME: - Uncomment if you need GCD/Operation saving
+        //FIXME: - Uncomment if you need Operation saving
 //        stackViewWithSavingButtons.isHidden = true
         profileName.isHidden = false
         profileDescription.isHidden = false
@@ -467,7 +501,7 @@ extension ProfileViewController: UITextViewDelegate {
         textViewCharacterCounter.text = "\(textLimit - textView.text.count)"
         if profileDescriptionChecker != textViewProfileDescription.text {
             buttonsAvailability(coreDataButton, availability: true)
-            //FIXME: - Uncomment if you need GCD/Operation saving
+            //FIXME: - Uncomment if you need Operation saving
 //            buttonsAvailability(operationButton, availability: true)
         }
     }

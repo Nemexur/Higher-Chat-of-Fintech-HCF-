@@ -62,19 +62,19 @@ class StorageManager: IStorageManager {
 
     //Fetch Conversations of AppUser
     func readDataConversation() -> [Conversation]? {
-        guard let context = coreDataContextToSaveNewData
-            else {
-                print("Error with ManagedObjectContext in StorageManager")
-                return nil }
-        let request: NSFetchRequest<Conversation> = Conversation.fetchRequest()
-//        return getFetchRequestData(Conversation.self, dataManager: self)
-        do {
-            let results = try context.fetch(request)
-            return results
-        } catch {
-            print("Error in fetchRequest with certain ConversationID")
-            return nil
-        }
+        return getFetchRequestData(Conversation.self, dataManager: self)
+//        guard let context = coreDataContextToSaveNewData
+//            else {
+//                print("Error with ManagedObjectContext in StorageManager")
+//                return nil }
+//        let request: NSFetchRequest<Conversation> = Conversation.fetchRequest()
+//        do {
+//            let results = try context.fetch(request)
+//            return results
+//        } catch {
+//            print("Error in fetchRequest with certain ConversationID")
+//            return nil
+//        }
     }
 
     //Getting Messages From the certain Conversation
@@ -136,95 +136,96 @@ class StorageManager: IStorageManager {
     // MARK: - Additional Functions
 
     private func fetchAppUserData() -> [AppUser]? {
-        guard let context = coreDataContextToSaveNewData
-            else {
-                print("Error with ManagedObjectContext in StorageManager")
-                return nil }
-        guard let model = coreDataModel
-            else {
-                print("Error with ManagedObjectModel in StorageManager")
-                return nil }
-        guard let fetchRequest = AppUser.fetchRequestAppUser(model: model)
-            else {
-                print("Error with FetchRequest to get AppUser")
-                return nil }
-        do {
-            let results = try context.fetch(fetchRequest)
-            return results
-        } catch {
-            fatalError("Error with fetching in Context")
-        }
+        return getFetchRequestData(AppUser.self, dataManager: self)
+//        guard let context = coreDataContextToSaveNewData
+//            else {
+//                print("Error with ManagedObjectContext in StorageManager")
+//                return nil }
+//        guard let model = coreDataModel
+//            else {
+//                print("Error with ManagedObjectModel in StorageManager")
+//                return nil }
+//        guard let fetchRequest = AppUser.fetchRequestAppUser(model: model)
+//            else {
+//                print("Error with FetchRequest to get AppUser")
+//                return nil }
+//        do {
+//            let results = try context.fetch(fetchRequest)
+//            return results
+//        } catch {
+//            fatalError("Error with fetching in Context")
+//        }
     }
 
     private func fetchConversation(with conversationId: String) -> [Conversation]? {
-        guard let context = coreDataContextToSaveNewData
-            else {
-                print("Error with ManagedObjectContext in StorageManager")
-                return nil }
-        let request: NSFetchRequest<Conversation> = Conversation.fetchRequest()
         let fetchPredicate = NSPredicate(format: "conversationID = %@", conversationId)
-//        return getFetchRequestData(Conversation.self, dataManager: self, predicate: fetchPredicate)
-        request.predicate = fetchPredicate
-        do {
-            let results = try context.fetch(request)
-            return results
-        } catch {
-            print("Error in fetchRequest with certain ConversationID")
-            return nil
-        }
+         return getFetchRequestData(Conversation.self, dataManager: self, predicate: fetchPredicate)
+//        guard let context = coreDataContextToSaveNewData
+//            else {
+//                print("Error with ManagedObjectContext in StorageManager")
+//                return nil }
+//        let request: NSFetchRequest<Conversation> = Conversation.fetchRequest()
+//        request.predicate = fetchPredicate
+//        do {
+//            let results = try context.fetch(request)
+//            return results
+//        } catch {
+//            print("Error in fetchRequest with certain ConversationID")
+//            return nil
+//        }
     }
 
     private func fetchConversationWhereUserOnline() -> [Conversation]? {
-        guard let context = coreDataContextToSaveNewData
-            else {
-                print("Error with ManagedObjectContext in StorageManager")
-                return nil }
-        let request: NSFetchRequest<Conversation> = Conversation.fetchRequest()
         let fetchPredicate = NSPredicate(format: "withUser.isOnline = %@", NSNumber(booleanLiteral: true))
-//        return getFetchRequestData(Conversation.self, dataManager: self, predicate: fetchPredicate)
-        request.predicate = fetchPredicate
-        do {
-            let results = try context.fetch(request)
-            return results
-        } catch {
-            print("Error in fetchRequest whereUserOnline")
-            return nil
-        }
+        return getFetchRequestData(Conversation.self, dataManager: self, predicate: fetchPredicate)
+//        guard let context = coreDataContextToSaveNewData
+//            else {
+//                print("Error with ManagedObjectContext in StorageManager")
+//                return nil }
+//        let request: NSFetchRequest<Conversation> = Conversation.fetchRequest()
+//        request.predicate = fetchPredicate
+//        do {
+//            let results = try context.fetch(request)
+//            return results
+//        } catch {
+//            print("Error in fetchRequest whereUserOnline")
+//            return nil
+//        }
     }
 
     private func fetchUser(with onlineAttribute: Bool) -> [User]? {
-        guard let context = coreDataContextToSaveNewData
-            else {
-                print("Error with ManagedObjectContext in StorageManager")
-                return nil }
-        let request: NSFetchRequest<User> = User.fetchRequest()
         let fetchPredicate = NSPredicate(format: "isOnline = %@", NSNumber(booleanLiteral: onlineAttribute))
-//        return getFetchRequestData(User.self, dataManager: self, predicate: fetchPredicate)
-        request.predicate = fetchPredicate
-        do {
-            let results = try context.fetch(request)
-            return results
-        } catch {
-            print("Error in fetchRequest with onlineAttribute")
-            return nil
-        }
+        return getFetchRequestData(User.self, dataManager: self, predicate: fetchPredicate)
+//        guard let context = coreDataContextToSaveNewData
+//            else {
+//                print("Error with ManagedObjectContext in StorageManager")
+//                return nil }
+//        let request: NSFetchRequest<User> = User.fetchRequest()
+//        request.predicate = fetchPredicate
+//        do {
+//            let results = try context.fetch(request)
+//            return results
+//        } catch {
+//            print("Error in fetchRequest with onlineAttribute")
+//            return nil
+//        }
     }
 
     private func fetchUser(with certainID: String) -> [User]? {
-        guard let context = coreDataContextToSaveNewData
-            else {
-                print("Error with ManagedObjectContext in StorageManager")
-                return nil }
-        let request: NSFetchRequest<User> = User.fetchRequest()
         let fetchPredicate = NSPredicate(format: "userID = %@", certainID)
-//        return getFetchRequestData(User.self, dataManager: self, predicate: fetchPredicate)
-        request.predicate = fetchPredicate
-        do {
-            let results = try context.fetch(request)
-            return results
-        } catch {
-            print("Error in fetchRequest with certainID")
-            return nil
-        }
+        return getFetchRequestData(User.self, dataManager: self, predicate: fetchPredicate)
+//        guard let context = coreDataContextToSaveNewData
+//            else {
+//                print("Error with ManagedObjectContext in StorageManager")
+//                return nil }
+//        let request: NSFetchRequest<User> = User.fetchRequest()
+//        request.predicate = fetchPredicate
+//        do {
+//            let results = try context.fetch(request)
+//            return results
+//        } catch {
+//            print("Error in fetchRequest with certainID")
+//            return nil
+//        }
     }
 }

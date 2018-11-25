@@ -9,3 +9,4 @@ disabled_rules: # rule identifiers to exclude from running
   - weak_delegate
   - cyclomatic_complexity
   - compiler_protocol_init
+  - colon

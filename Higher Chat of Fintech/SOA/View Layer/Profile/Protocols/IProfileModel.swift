@@ -13,6 +13,7 @@ protocol IProfileModel: class {
     var delegate: ProfileModelDelegate? { get set }
     var storageManager: IStorageManager { get }
     var operationManager: ISavingData { get set }
+    var networkManager: INetworkManager { get }
     func getContextToSaveNewData() -> NSManagedObjectContext?
     func fetchAppUserData() -> AppUser?
     func fetchUserDataViaOperation()

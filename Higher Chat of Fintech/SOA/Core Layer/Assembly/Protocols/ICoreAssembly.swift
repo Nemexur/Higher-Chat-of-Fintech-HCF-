@@ -11,4 +11,5 @@ import Foundation
 protocol ICoreAssembly {
     var multipeerCommunicator: IMultipeerCommunicator { get set }
     var coreDataStack: ICoreDataStack { get set }
+    var requestSender: IRequestSender { get set }
 }

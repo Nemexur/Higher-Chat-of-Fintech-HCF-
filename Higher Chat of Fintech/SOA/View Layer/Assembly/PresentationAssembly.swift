@@ -14,6 +14,6 @@ class PresentationAssembly: IPresentationAssembly {
         self.serviceAssembly = serviceAssembly
     }
     func setupConversationsListModel() -> IConversationsListModel {
-        return ConversationsListModel(storageManager: serviceAssembly.storageManager, communicatorManager: serviceAssembly.communicationManager, operationManager: serviceAssembly.savingManager)
+        return ConversationsListModel(storageManager: serviceAssembly.storageManager, communicatorManager: serviceAssembly.communicationManager, operationManager: serviceAssembly.savingManager, networkManager: serviceAssembly.networkManager)
     }
 }

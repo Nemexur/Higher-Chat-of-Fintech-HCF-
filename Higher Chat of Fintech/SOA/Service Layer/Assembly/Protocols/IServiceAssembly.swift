@@ -12,4 +12,5 @@ protocol IServiceAssembly {
     var storageManager: IStorageManager { get }
     var savingManager: ISavingData { get }
     var communicationManager: ICommunicationManager { get }
+    var networkManager: INetworkManager { get }
 }

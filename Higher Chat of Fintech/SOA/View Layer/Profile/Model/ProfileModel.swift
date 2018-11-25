@@ -24,9 +24,11 @@ class ProfileModel: IProfileModel {
     weak var delegate: ProfileModelDelegate?
     var storageManager: IStorageManager
     var operationManager: ISavingData
-    init(storageManager: IStorageManager, operationManager: ISavingData) {
+    var networkManager: INetworkManager
+    init(storageManager: IStorageManager, operationManager: ISavingData, networkManager: INetworkManager) {
         self.storageManager = storageManager
         self.operationManager = operationManager
+        self.networkManager = networkManager
     }
     func fetchAppUserData() -> AppUser? {
         if let data = storageManager.readDataAppUser() {
