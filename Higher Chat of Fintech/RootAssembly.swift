@@ -7,9 +7,18 @@
 //
 
 import Foundation
+import MultipeerConnectivity
 
 class RootAssembly {
-    lazy var coreAssembly: ICoreAssembly = CoreAssembly()
-    lazy var serviceAssembly: IServiceAssembly = ServiceAssembly(coreAssembly: self.coreAssembly)
+    private lazy var coreAssembly: ICoreAssembly = CoreAssembly()
+    private lazy var serviceAssembly: IServiceAssembly = ServiceAssembly(coreAssembly: self.coreAssembly)
     lazy var presentationAssembly: IPresentationAssembly = PresentationAssembly(serviceAssembly: self.serviceAssembly)
+    //Get Advertiser
+    func getAdvertiser() -> MCNearbyServiceAdvertiser {
+        return coreAssembly.multipeerCommunicator.advertiser
+    }
+    //Get Browser
+    func getBrowser() -> MCNearbyServiceBrowser {
+        return coreAssembly.multipeerCommunicator.browser
+    }
 }
