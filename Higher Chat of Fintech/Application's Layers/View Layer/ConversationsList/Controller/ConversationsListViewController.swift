@@ -80,7 +80,6 @@ class ConversationsListViewController: UIViewController, ThemesViewControllerDel
     // MARK: - Do something with Navigation Bar/UI
 
     private func setupNavigationBarAndView() {
-        navigationController?.navigationBar.prefersLargeTitles = true
         chooseThemePickerView.layer.cornerRadius = 15
         conversationsTableView.alpha = 0
         conversationsTableView.tableFooterView = UIView()

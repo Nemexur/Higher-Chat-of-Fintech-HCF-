@@ -11,7 +11,7 @@ import Foundation
 class ImageLoader: IImageLoader {
     var imageURL: String?
     weak var delegate: ImageLoaderDelegate?
-    
+
     init(imageURL: String) {
         self.imageURL = imageURL
     }

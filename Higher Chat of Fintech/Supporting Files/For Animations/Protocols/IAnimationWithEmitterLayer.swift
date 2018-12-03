@@ -10,7 +10,7 @@ import Foundation
 
 protocol IAnimationWithEmitterLayer {
     var rootLayer: CALayer? { get set }
-    var emitterLayer : CAEmitterLayer? { get set }
+    var emitterLayer: CAEmitterLayer? { get set }
     var emitterCell: CAEmitterCell? { get set }
     var recognizer: UILongPressGestureRecognizer? { get set }
     var view: UIView? { get set }

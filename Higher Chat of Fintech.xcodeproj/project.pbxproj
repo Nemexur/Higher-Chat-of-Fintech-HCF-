@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0CECD575817B0DCC49D35BDD /* Pods_Higher_Chat_of_Fintech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FE27E085F61FB5529C60BE2 /* Pods_Higher_Chat_of_Fintech.framework */; };
 		2604D923218AFF4000787678 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2604D922218AFF4000787678 /* CoreDataStack.swift */; };
 		2604D926218AFFDC00787678 /* ModelForCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2604D924218AFFDC00787678 /* ModelForCoreData.xcdatamodeld */; };
 		2604D92A218B152400787678 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2604D929218B152400787678 /* AppUser.swift */; };
@@ -91,7 +92,6 @@
 		26F51F5E21554ECA002D5EB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26F51F5C21554ECA002D5EB4 /* Main.storyboard */; };
 		26F51F6021554ECC002D5EB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26F51F5F21554ECC002D5EB4 /* Assets.xcassets */; };
 		26F51F6321554ECC002D5EB4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26F51F6121554ECC002D5EB4 /* LaunchScreen.storyboard */; };
-		F7E984868F1132DE79D92F5D /* Pods_Higher_Chat_of_Fintech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC235D1D01BA94E6E7E255B2 /* Pods_Higher_Chat_of_Fintech.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -185,9 +185,9 @@
 		26F51F5F21554ECC002D5EB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		26F51F6221554ECC002D5EB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		26F51F6421554ECC002D5EB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		94F7FC16A644C737791076AF /* Pods-Higher Chat of Fintech.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Higher Chat of Fintech.release.xcconfig"; path = "Pods/Target Support Files/Pods-Higher Chat of Fintech/Pods-Higher Chat of Fintech.release.xcconfig"; sourceTree = "<group>"; };
-		EE8E66B6F036E804B719B2A5 /* Pods-Higher Chat of Fintech.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Higher Chat of Fintech.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Higher Chat of Fintech/Pods-Higher Chat of Fintech.debug.xcconfig"; sourceTree = "<group>"; };
-		FC235D1D01BA94E6E7E255B2 /* Pods_Higher_Chat_of_Fintech.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Higher_Chat_of_Fintech.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4811EFF474C796542B7B420C /* Pods-Higher Chat of Fintech.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Higher Chat of Fintech.release.xcconfig"; path = "Pods/Target Support Files/Pods-Higher Chat of Fintech/Pods-Higher Chat of Fintech.release.xcconfig"; sourceTree = "<group>"; };
+		9FE27E085F61FB5529C60BE2 /* Pods_Higher_Chat_of_Fintech.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Higher_Chat_of_Fintech.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8EB72B027437B602CDCC5F1 /* Pods-Higher Chat of Fintech.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Higher Chat of Fintech.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Higher Chat of Fintech/Pods-Higher Chat of Fintech.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,7 +195,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7E984868F1132DE79D92F5D /* Pods_Higher_Chat_of_Fintech.framework in Frameworks */,
+				0CECD575817B0DCC49D35BDD /* Pods_Higher_Chat_of_Fintech.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1232,8 +1232,8 @@
 			children = (
 				26F51F5721554ECA002D5EB4 /* Higher Chat of Fintech */,
 				26F51F5621554ECA002D5EB4 /* Products */,
-				7BB83DA9E306C1C729A5FA66 /* Pods */,
-				8DD719A80F09066C082D6B89 /* Frameworks */,
+				C1C44C3324983C237CBAADDE /* Pods */,
+				DACA7F3BED059E3752B49C03 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1259,19 +1259,19 @@
 			path = "Higher Chat of Fintech";
 			sourceTree = "<group>";
 		};
-		7BB83DA9E306C1C729A5FA66 /* Pods */ = {
+		C1C44C3324983C237CBAADDE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EE8E66B6F036E804B719B2A5 /* Pods-Higher Chat of Fintech.debug.xcconfig */,
-				94F7FC16A644C737791076AF /* Pods-Higher Chat of Fintech.release.xcconfig */,
+				F8EB72B027437B602CDCC5F1 /* Pods-Higher Chat of Fintech.debug.xcconfig */,
+				4811EFF474C796542B7B420C /* Pods-Higher Chat of Fintech.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		8DD719A80F09066C082D6B89 /* Frameworks */ = {
+		DACA7F3BED059E3752B49C03 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FC235D1D01BA94E6E7E255B2 /* Pods_Higher_Chat_of_Fintech.framework */,
+				9FE27E085F61FB5529C60BE2 /* Pods_Higher_Chat_of_Fintech.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1283,7 +1283,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 26F51F6721554ECC002D5EB4 /* Build configuration list for PBXNativeTarget "Higher Chat of Fintech" */;
 			buildPhases = (
-				B4953075CCC735217D4176D3 /* [CP] Check Pods Manifest.lock */,
+				ED963431AFECF3FC1C82910D /* [CP] Check Pods Manifest.lock */,
 				264C3F2B219851BD00112105 /* SwiftLint */,
 				26F51F5121554ECA002D5EB4 /* Sources */,
 				26F51F5221554ECA002D5EB4 /* Frameworks */,
@@ -1365,7 +1365,7 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
-		B4953075CCC735217D4176D3 /* [CP] Check Pods Manifest.lock */ = {
+		ED963431AFECF3FC1C82910D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1556,6 +1556,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -1617,7 +1618,7 @@
 		};
 		26F51F6821554ECC002D5EB4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EE8E66B6F036E804B719B2A5 /* Pods-Higher Chat of Fintech.debug.xcconfig */;
+			baseConfigurationReference = F8EB72B027437B602CDCC5F1 /* Pods-Higher Chat of Fintech.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1631,6 +1632,7 @@
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nemexur.Higher-Chat-of-Fintech";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OBJC_BRIDGING_HEADER = "Higher Chat of Fintech/Application's Layers/View Layer/Theme Picker/Bridging Header/Higher Chat of Fintech-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
@@ -1640,7 +1642,7 @@
 		};
 		26F51F6921554ECC002D5EB4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 94F7FC16A644C737791076AF /* Pods-Higher Chat of Fintech.release.xcconfig */;
+			baseConfigurationReference = 4811EFF474C796542B7B420C /* Pods-Higher Chat of Fintech.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1654,6 +1656,7 @@
 				OTHER_SWIFT_FLAGS = "-DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nemexur.Higher-Chat-of-Fintech";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OBJC_BRIDGING_HEADER = "Higher Chat of Fintech/Application's Layers/View Layer/Theme Picker/Bridging Header/Higher Chat of Fintech-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

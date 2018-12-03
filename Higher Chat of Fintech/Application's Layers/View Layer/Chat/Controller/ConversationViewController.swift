@@ -21,7 +21,7 @@ struct CellID {
 struct TitleConfiguration {
     static let fontName: String = "Helvetica"
     static let fontSize: CGFloat = 20
-    
+
     private init() { }
 }
 
@@ -41,7 +41,8 @@ class ConversationViewController: UIViewController, ConversationModelDelegate, C
     // MARK: - Variables
     var user: Conversation? {
         didSet {
-            navigationItem.title = user!.withUser?.userName
+            chatUser.text = user!.withUser?.userName
+            navigationItem.title = nil
         }
     }
     var userDevice: String!
@@ -50,6 +51,10 @@ class ConversationViewController: UIViewController, ConversationModelDelegate, C
     var conversationModel: IConversationModel?
     private var userIsOnline: Bool?
     private var emitterAnimationOnTap: IAnimationWithEmitterLayer?
+    private let chatUser = UILabel.init()
+    private let conditionLabel = UILabel.init()
+    // To Check and Store Condition
+    private var onlineOffline = ""
 
     weak var conversationsListViewController: ConversationsListViewController?
     fileprivate var fetchedResultsController: NSFetchedResultsController<Message>?
@@ -71,8 +76,8 @@ class ConversationViewController: UIViewController, ConversationModelDelegate, C
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        setupNavigationBarTitleAndButtons()
         setupViewElements()
+        setupNavigationBarTitleAndСhecker()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -80,7 +85,15 @@ class ConversationViewController: UIViewController, ConversationModelDelegate, C
         conversationModel?.communicatorManager.delegate = conversationModel as? ConversationModel
         UIView.animate(withDuration: 0.3) {
             self.chatTableView.alpha = 1
+            self.navigationController?.navigationBar.alpha = 1
+            self.performAnimationForTitle()
+            self.inputMessageView.alpha = 1
         }
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        chatUser.removeFromSuperview()
+        conditionLabel.removeFromSuperview()
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
@@ -143,18 +156,30 @@ class ConversationViewController: UIViewController, ConversationModelDelegate, C
         completedMessage.layer.opacity = 0.66
         completedMessage.isEnabled = false
         chatTableView.alpha = 0
+        navigationController?.navigationBar.alpha = 0
+        inputMessageView.alpha = 0
         conversationID = user?.conversationID
         inputMessageView.layer.borderColor = UIColor.lightGray.cgColor
         inputMessageView.layer.borderWidth = 1
+        guard let width = navigationController?.navigationBar.frame.width,
+            let height = navigationController?.navigationBar.frame.height
+            else { return }
+        chatUser.frame = CGRect(x: 0, y: 0, width: width, height: height / 2)
+        conditionLabel.frame = CGRect(x: 0, y: height / 2, width: width, height: height / 2)
+        conditionLabel.textAlignment = .center
+        chatUser.textAlignment = .center
     }
-    private func setupNavigationBarTitleAndButtons() {
+    private func setupNavigationBarTitleAndСhecker() {
         if user?.isOnline == true {
             userIsOnline = true
-            navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: TitleConfiguration.fontName, size: TitleConfiguration.fontSize * 1.1) as Any, NSAttributedString.Key.foregroundColor: UIColor.green]
+            onlineOffline = "Online"
         } else {
             userIsOnline = false
-            navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: TitleConfiguration.fontName, size: TitleConfiguration.fontSize) as Any, NSAttributedString.Key.foregroundColor: UIColor.black]
+            onlineOffline = "Offline"
         }
+        conditionLabel.text = onlineOffline
+        navigationController?.navigationBar.addSubview(conditionLabel)
+        navigationController?.navigationBar.addSubview(chatUser)
     }
     private func setupGestures() {
         let tapToHideKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyBoard))
@@ -189,8 +214,8 @@ class ConversationViewController: UIViewController, ConversationModelDelegate, C
             messages = fetchedMessages
         }
     }
-    
-    //MARK: - Animations for Sending Message Button
+
+    // MARK: - Animations for Sending Message Button
     private func performAnimationForSendingMessageButton() {
         let groupAnimation = CAAnimationGroup()
         groupAnimation.duration = 0.5
@@ -233,32 +258,39 @@ class ConversationViewController: UIViewController, ConversationModelDelegate, C
         animationOpacity.toValue = toValue
         return animationOpacity
     }
-    
-    //MARK: - Animations For ViewController Title
+
+    // MARK: - Animations For ViewController Title
     private func performAnimationForTitle() {
         // MARK: - Animation For ViewController Title via UIView.animate
         if userIsOnline == true {
             UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0, options: [.curveEaseOut], animations: {
-                self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: TitleConfiguration.fontName, size: TitleConfiguration.fontSize * 1.1) as Any, NSAttributedString.Key.foregroundColor: UIColor.green]
-                self.navigationController?.navigationBar.layoutIfNeeded()
+                guard let labels = self.navigationController?.navigationBar.subviews.filter({$0 is UILabel}) else { return }
+                guard let labelCondition = labels.first(where: {($0 as? UILabel)?.text == self.onlineOffline}) as? UILabel,
+                    let labelUser = labels.first(where: {($0 as? UILabel)?.text == self.user?.withUser?.userName}) as? UILabel
+                    else { return }
+                labelCondition.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+                labelCondition.textColor = UIColor.green
+                self.onlineOffline = "Online"
+                labelCondition.text = self.onlineOffline
+                labelUser.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+                labelUser.textColor = UIColor.green
+                self.navigationController?.navigationBar.topItem?.titleView?.layoutIfNeeded()
             }, completion: nil)
         } else {
             UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0, options: [.curveEaseOut], animations: {
-                self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: TitleConfiguration.fontName, size: TitleConfiguration.fontSize) as Any, NSAttributedString.Key.foregroundColor: UIColor.black]
-                self.navigationController?.navigationBar.layoutIfNeeded()
+                guard let labels = self.navigationController?.navigationBar.subviews.filter({$0 is UILabel}) else { return }
+                guard let labelCondition = labels.first(where: {($0 as? UILabel)?.text == self.onlineOffline}) as? UILabel,
+                    let labelUser = labels.first(where: {($0 as? UILabel)?.text == self.user?.withUser?.userName}) as? UILabel
+                    else { return }
+                labelCondition.transform = .identity
+                labelCondition.textColor = UIColor.black
+                self.onlineOffline = "Offline"
+                labelCondition.text = self.onlineOffline
+                labelUser.transform = .identity
+                labelUser.textColor = UIColor.black
+                self.navigationController?.navigationBar.topItem?.titleView?.layoutIfNeeded()
             }, completion: nil)
         }
-        // MARK: - Animation For ViewController Title via CATransition
-//        let fadeTextAnimation = CATransition()
-//        fadeTextAnimation.duration = 1
-//        fadeTextAnimation.type = CATransitionType.fade
-//        fadeTextAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-//        self.navigationController?.navigationBar.layer.add(fadeTextAnimation, forKey: nil)
-//        if userIsOnline == true {
-//            navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: TitleConfiguration.fontName, size: TitleConfiguration.fontSize * 1.1) as Any, NSAttributedString.Key.foregroundColor: UIColor.green]
-//        } else {
-//            navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: TitleConfiguration.fontName, size: TitleConfiguration.fontSize) as Any, NSAttributedString.Key.foregroundColor: UIColor.black]
-//        }
     }
     // MARK: - Delegate Functions
     func setup(datasource: [ConversationCellDisplayModel]) {

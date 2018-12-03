@@ -75,7 +75,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     private var saveDataHandler: ISavingData?
 
     private let textLimit: Int = 70
-    
+
     private var emitterAnimationOnTap: IAnimationWithEmitterLayer?
     // MARK: - Data Checker
 

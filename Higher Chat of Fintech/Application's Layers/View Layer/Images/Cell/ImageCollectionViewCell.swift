@@ -30,14 +30,14 @@ class ImageCollectionViewCell: UICollectionViewCell, ImageLoaderDelegate {
     func didReceiveError(error: String) {
         print(error)
     }
-    
+
     func startIndicator() {
         UIView.animate(withDuration: 0.5) {
             self.loadingIndicator.startAnimating()
             self.loadingIndicator.alpha = 1
         }
     }
-    
+
     func stopIndicator() {
         loadingIndicator.stopAnimating()
     }
